@@ -14,16 +14,15 @@ public abstract class Sprite
     private int imagePosition;
     private float positionX;
     private float positionY;
+    private int width;
+    private int height;
 
     public void show()
     {
         this.visible = true;
     }
 
-    public void hide()
-    {
-        this.visible = false;
-    }
+    public void hide() { this.visible = false; }
 
     public boolean isVisible()
     {
@@ -33,6 +32,8 @@ public abstract class Sprite
     private void loadImage(String imagePath)
     {
         this.image = new ImageIcon(imagePath).getImage();
+        this.width = image.getWidth(null);
+        this.height = this.image.getHeight(null);
     }
 
     public void setImage(String imagePath)
@@ -64,4 +65,9 @@ public abstract class Sprite
     {
         return this.positionY;
     }
+
+    public int getWidth() { return this.width; }
+
+    public int getHeight() { return this.height; }
+
 }
