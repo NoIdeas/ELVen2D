@@ -1,7 +1,7 @@
 package models;
 
 /**
- * Created by duds410.
+ * Created by NoIdeas.
  */
 
 public class Gravity

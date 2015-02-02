@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * Created by duds410.
+ * Created by NoIdeas.
  */
 
 public abstract class Sprite
@@ -14,11 +14,6 @@ public abstract class Sprite
     private int imagePosition;
     private float positionX;
     private float positionY;
-    /*
-    private int direction;
-    private float speedX;
-    private float speedY;
-    */
 
     public void show()
     {
@@ -35,9 +30,14 @@ public abstract class Sprite
         return this.visible;
     }
 
-    public void setImage(String image)
+    private void loadImage(String imagePath)
     {
-        this.image = new ImageIcon(image).getImage();
+        this.image = new ImageIcon(imagePath).getImage();
+    }
+
+    public void setImage(String imagePath)
+    {
+        loadImage(imagePath);
     }
 
     public Image getImage()
@@ -45,12 +45,12 @@ public abstract class Sprite
         return this.image;
     }
 
-    public void setPositionX(int positionX)
+    public void setPositionX(float positionX)
     {
         this.positionX = positionX;
     }
 
-    public void setPositionY(int positionY)
+    public void setPositionY(float positionY)
     {
         this.positionY = positionY;
     }

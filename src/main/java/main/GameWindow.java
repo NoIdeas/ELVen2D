@@ -1,26 +1,30 @@
 package main;
 
-import models.Sprite;
-
 import javax.swing.*;
+import java.awt.*;
 
 /**
- * Created by duds410.
+ * Created by NoIdeas.
  */
 
 public class GameWindow extends JFrame
 {
-
     public GameWindow()
     {
         this.add(new GameBoard());
 
-        setSize(500, 500);
+        pack();
         setTitle("Game Test");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+    }
 
-        Sprite s = new Sprite();
-        s.show();
+    public static void main(String[] args)
+    {
+        EventQueue.invokeLater(() ->
+        {
+            JFrame gw = new GameWindow();
+            gw.setVisible(true);
+        });
     }
 }
