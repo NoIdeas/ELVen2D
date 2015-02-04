@@ -51,8 +51,9 @@ public class GameBoard extends JPanel implements Runnable
 
     private void cycle()
     {
-        plataformer.setPositionX(plataformer.getPositionX() + plataformer.getSpeedX());
-        plataformer.setPositionY(plataformer.getPositionY() + plataformer.getSpeedY());
+        plataformer.moveAction();
+        plataformer.setSpeed(2);
+
 
         if (plataformer.getPositionY() > B_HEIGHT)
         {

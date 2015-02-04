@@ -22,22 +22,22 @@ public class PlataformerObject extends MovableObject
 
         if (key == KeyEvent.VK_LEFT)
         {
-            super.setSpeedX(-1);
+            super.setDirectionX(-1);
         }
 
         if (key == KeyEvent.VK_RIGHT)
         {
-            super.setSpeedX(1);
+            super.setDirectionX(1);
         }
 
         if (key == KeyEvent.VK_UP)
         {
-            super.setSpeedY(-1);
+            super.setDirectionY(-1);
         }
 
         if (key == KeyEvent.VK_DOWN)
         {
-            super.setSpeedY(1);
+            super.setDirectionY(1);
         }
     }
 
@@ -47,22 +47,22 @@ public class PlataformerObject extends MovableObject
 
         if (key == KeyEvent.VK_LEFT)
         {
-            super.setSpeedX(0);
+            super.setDirectionX(0);
         }
 
         if (key == KeyEvent.VK_RIGHT)
         {
-            super.setSpeedX(0);
+            super.setDirectionX(0);
         }
 
         if (key == KeyEvent.VK_UP)
         {
-            super.setSpeedY(0);
+            super.setDirectionY(0);
         }
 
         if (key == KeyEvent.VK_DOWN)
         {
-            super.setSpeedY(0);
+            super.setDirectionY(0);
         }
     }
 }
