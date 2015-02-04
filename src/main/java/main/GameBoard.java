@@ -1,11 +1,10 @@
 package main;
 
+import models.KeyboardListener;
 import models.PlataformerObject;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 /**
  * Created by NoIdeas.
@@ -22,7 +21,7 @@ public class GameBoard extends JPanel implements Runnable
 
     public GameBoard()
     {
-        addKeyListener(new TAdapter());
+        addKeyListener(KeyboardListener.getInstance());
         setFocusable(true);
         setBackground(Color.BLACK);
         setPreferredSize(new Dimension(B_WIDTH, B_HEIGHT));
@@ -45,7 +44,7 @@ public class GameBoard extends JPanel implements Runnable
     {
         super.paintComponent(g);
 
-        g.drawImage(plataformer.getImage(), (int)plataformer.getPositionX(), (int)plataformer.getPositionY(), this);
+        g.drawImage(plataformer.getImage(), (int) plataformer.getPositionX(), (int) plataformer.getPositionY(), this);
         Toolkit.getDefaultToolkit().sync();
     }
 
@@ -97,17 +96,6 @@ public class GameBoard extends JPanel implements Runnable
             }
 
             beforeTime = System.currentTimeMillis();
-        }
-    }
-
-    private class TAdapter extends KeyAdapter
-    {
-        public void keyReleased(KeyEvent e) {
-            plataformer.keyReleased(e);
-        }
-
-        public void keyPressed(KeyEvent e) {
-            plataformer.keyPressed(e);
         }
     }
 }
