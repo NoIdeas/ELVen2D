@@ -13,24 +13,8 @@ public abstract class MovableObject extends Sprite
 
     public void moveAction()
     {
-        KeyboardListener keyboardListener = KeyboardListener.getInstance();
-
-        if (keyboardListener.isLeftKeyPressed())
-            this.directionX = -1;
-        if (keyboardListener.isRigthKeyPressed())
-            this.directionX = 1;
-        if (keyboardListener.isLeftKeyPressed() == keyboardListener.isRigthKeyPressed())
-            this.directionX = 0;
-
-        if (keyboardListener.isUpKeyPressed())
-            this.directionY = -1;
-        if (keyboardListener.isDownKeyPressed())
-            this.directionY = 1;
-        if (keyboardListener.isUpKeyPressed() == keyboardListener.isDownKeyPressed())
-            this.directionY = 0;
-
-        super.setPositionX(super.getPositionX() + (this.speedX * this.directionX));
-        super.setPositionY(super.getPositionY() + (this.speedY * this.directionY));
+        super.setPositionX(super.getPositionX() + (this.getSpeedX() * this.getDirectionX()));
+        super.setPositionY(super.getPositionY() + (this.getSpeedY() * this.getDirectionY()));
     }
 
     public void setSpeed(float speed)
