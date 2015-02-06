@@ -1,6 +1,7 @@
-package Entities;
+package entities;
 
 import enums.CollisionSide;
+import helpers.KeyboardListener;
 import main.GameBoard;
 
 /**

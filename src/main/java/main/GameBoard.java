@@ -1,6 +1,7 @@
 package main;
 
-import models.*;
+import entities.*;
+import helpers.KeyboardListener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,7 +21,7 @@ public class GameBoard extends JPanel implements Runnable
     // Sprites
     public ArrayList<Sprite> sprites;
     private PlataformerEntity plataformerEntity;
-    private SceneObject sceneObject;
+    private SceneEntity sceneEntity;
 
     public GameBoard()
     {
@@ -32,11 +33,11 @@ public class GameBoard extends JPanel implements Runnable
 
         plataformerEntity = new PlataformerEntity(this, "mario.png", 0, 250);
         plataformerEntity.getAnimation().addFrameFromPath("mario_2.png");
-        sceneObject = new SceneObject(this, "mario.png", 250, 250);
+        sceneEntity = new SceneEntity(this, "mario.png", 250, 250);
 
         sprites = new ArrayList<>();
         sprites.add(plataformerEntity);
-        sprites.add(sceneObject);
+        sprites.add(sceneEntity);
     }
 
     @Override
@@ -55,8 +56,8 @@ public class GameBoard extends JPanel implements Runnable
 
         if (plataformerEntity.isVisible())
             g.drawImage(plataformerEntity.getImage(), (int) plataformerEntity.getPositionX(), (int) plataformerEntity.getPositionY(), this);
-        if (sceneObject.isVisible())
-            g.drawImage(sceneObject.getImage(), (int) sceneObject.getPositionX(), (int) sceneObject.getPositionY(), this);
+        if (sceneEntity.isVisible())
+            g.drawImage(sceneEntity.getImage(), (int) sceneEntity.getPositionX(), (int) sceneEntity.getPositionY(), this);
 
         g.setColor(Color.white);
 
@@ -95,14 +96,12 @@ public class GameBoard extends JPanel implements Runnable
         long beforeTime, beforeSleepTime = System.currentTimeMillis(), timeDiff, sleep;
         beforeTime = System.currentTimeMillis();
 
-        plataformerEntity.setSpeed(2);
+        plataformerEntity.setSpeed(70);
 
         while (true)
         {
             timeDiff = System.currentTimeMillis() - beforeTime;
             sleep = DELAY - timeDiff;
-
-            //System.out.println(System.currentTimeMillis() - beforeSleepTime);
 
             cycle(System.currentTimeMillis() - beforeSleepTime);
             repaint();

@@ -1,5 +1,6 @@
-package models;
+package entities;
 
+import entities.Sprite;
 import main.GameBoard;
 
 /**
