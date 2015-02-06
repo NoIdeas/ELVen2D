@@ -60,7 +60,16 @@ public class GameBoard extends JPanel implements Runnable
         if (sceneObject.isVisible())
             g.drawImage(sceneObject.getImage(), (int) sceneObject.getPositionX(), (int) sceneObject.getPositionY(), this);
 
-        g.drawString(plataformerEntity.getStringColliding(), 10, 20);
+        // dev
+        g.drawString("Colliding: " + plataformerEntity.getStringColliding(), 10, 20);
+        g.drawString("DirectionX: " + plataformerEntity.getDirectionX(), 10, 35);
+        g.drawString("DirectionY: " + plataformerEntity.getDirectionY(), 10, 50);
+
+        KeyboardListener kListener = KeyboardListener.getInstance();
+        g.drawString("isLeftKeyPressed: " + kListener.isLeftKeyPressed(), 200, 20);
+        g.drawString("isRigthKeyPressed: " + kListener.isRigthKeyPressed(), 200, 35);
+        g.drawString("isUpKeyPressed: " + kListener.isUpKeyPressed(), 200, 50);
+        g.drawString("isDownpKeyPressed: " + kListener.isDownKeyPressed(), 200, 65);
 
         Toolkit.getDefaultToolkit().sync();
     }
