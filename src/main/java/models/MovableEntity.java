@@ -32,19 +32,19 @@ public abstract class MovableEntity extends Sprite
 
     public CollisionSide checkCollision()
     {
-        Rectangle2D entityRectangle = this.getBounds();
+        Rectangle2D entityCollisionBox = this.getBounds();
         float entityCenterX = super.getPositionX() + super.getWidth() / 2;
         float entityCenterY = super.getPositionY() + super.getHeight() / 2;
 
         for (Sprite obstacle : gameBoard.sprites)
         {
-            Rectangle2D obstacleRectangle = obstacle.getBounds();
+            Rectangle2D obstacleCollisionBox = obstacle.getBounds();
             float obstacleCenterX = obstacle.getPositionX() + obstacle.getWidth() / 2;
             float obstacleCenterY = obstacle.getPositionY() + obstacle.getHeight() / 2;
 
-            if (obstacleRectangle.intersects(entityRectangle) && obstacle != this)
+            if (obstacleCollisionBox.intersects(entityCollisionBox) && obstacle != this)
             {
-                Rectangle2D collisionIntersection = intersect(entityRectangle, obstacleRectangle);
+                Rectangle2D collisionIntersection = intersect(entityCollisionBox, obstacleCollisionBox);
                 float diffX = (obstacleCenterX - entityCenterX);
                 float diffY = (obstacleCenterY - entityCenterY);
 
