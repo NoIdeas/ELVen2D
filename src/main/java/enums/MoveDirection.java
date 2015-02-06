@@ -1,4 +1,4 @@
-package models;
+package enums;
 
 /**
  * Created by duds410.

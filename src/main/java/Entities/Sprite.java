@@ -1,4 +1,4 @@
-package models;
+package Entities;
 
 import javafx.geometry.Rectangle2D;
 import main.GameBoard;

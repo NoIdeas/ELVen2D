@@ -1,4 +1,6 @@
-package models;
+package Entities;
+import enums.CollisionSide;
+import enums.MoveDirection;
 import javafx.geometry.Rectangle2D;
 
 /**

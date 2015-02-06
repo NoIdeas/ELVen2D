@@ -1,5 +1,6 @@
-package models;
+package Entities;
 
+import enums.CollisionSide;
 import main.GameBoard;
 
 /**
