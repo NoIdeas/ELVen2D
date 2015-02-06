@@ -35,7 +35,7 @@ public class PlataformerObject extends MovableObject
         if (keyboardListener.isUpKeyPressed() == keyboardListener.isDownKeyPressed())
             super.setDirectionY(0);
 
-        if(super.getDirectionX() < 0 && !super.isSideFree(CollisionSide.LEFT))
+        /*if(super.getDirectionX() < 0 && !super.isSideFree(CollisionSide.LEFT))
             super.setDirectionX(0);
         if(super.getDirectionX() > 0 && !super.isSideFree(CollisionSide.RIGHT))
             super.setDirectionX(0);
@@ -43,10 +43,10 @@ public class PlataformerObject extends MovableObject
         if(super.getDirectionY() < 0 && !super.isSideFree(CollisionSide.UP))
             super.setDirectionY(0);
         if(super.getDirectionY() > 0 && !super.isSideFree(CollisionSide.DOWN))
-            super.setDirectionY(0);
-
-        super.moveAction();
+            super.setDirectionY(0);*/
 
         super.checkCollision();
+        super.moveAction();
+        super.setSpeed(10);
     }
 }

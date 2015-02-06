@@ -1,4 +1,5 @@
 package models;
+import javafx.geometry.Rectangle2D;
 
 /**
  * Created by NoIdeas.
@@ -21,6 +22,27 @@ public abstract class MovableObject extends Sprite
     {
         this.speedX = speed;
         this.speedY = speed;
+    }
+
+    public boolean checkCollision()
+    {
+        float movementX = this.getSpeedX() * this.getDirectionX();
+        float movementY = this.getSpeedY() * this.getDirectionY();
+        Rectangle2D bound = new Rectangle2D(this.getPositionX(), this.getPositionY(), this.getWidth(), this.getHeight());
+
+        for (Sprite item : this.gameBoard.sprites)
+        {
+            Rectangle2D otherBound = new Rectangle2D(item.getPositionX(), item.getPositionY(), item.getWidth(), item.getHeight());
+            Rectangle2D movementBox = new Rectangle2D(this.getPositionX(), this.getPositionY(), this.getWidth() + movementX, this.getHeight() + movementY);
+
+            if (movementBox.intersects(otherBound) && item != this)
+            {
+                float x = (float) (otherBound.getMinX() - movementBox.getMaxX());
+                this.setSpeed(x);
+                return true;
+            }
+        }
+        return false;
     }
 
     public float getSpeedX()

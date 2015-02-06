@@ -33,8 +33,8 @@ public class GameBoard extends JPanel implements Runnable
         setPreferredSize(new Dimension(B_WIDTH, B_HEIGHT));
         setDoubleBuffered(true);
 
-        plataformerObject = new PlataformerObject(this, "C:/Users/duds410/Desktop/mario.png", 0, 250);
-        sceneObject = new SceneObject(this, "C:/Users/duds410/Desktop/mario.png", 250, 250);
+        plataformerObject = new PlataformerObject(this, "C:/Users/Vitor/Desktop/mario.png", 0, 250);
+        sceneObject = new SceneObject(this, "C:/Users/Vitor/Desktop/mario.png", 250, 250);
 
         sprites = new ArrayList<>();
         sprites.add(plataformerObject);
@@ -90,8 +90,6 @@ public class GameBoard extends JPanel implements Runnable
     {
         long beforeTime, timeDiff, sleep;
         beforeTime = System.currentTimeMillis();
-
-        plataformerObject.setSpeed(70);
 
         while (true)
         {

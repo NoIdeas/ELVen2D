@@ -88,7 +88,7 @@ public abstract class Sprite
     {
         return new Rectangle2D(this.positionX, this.positionY, this.width, this.height);
     }
-
+    /*
     public CollisionSide checkCollision()
     {
         Rectangle2D esseRectangle = this.getBounds();
@@ -178,7 +178,7 @@ public abstract class Sprite
         }
 
         return true;
-    }
+    }*/
 
     /**
      * Returns a rectangle that represents the intersection between two other rectangles.
