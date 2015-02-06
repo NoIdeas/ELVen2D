@@ -1,9 +1,6 @@
 package main;
 
-import models.KeyboardListener;
-import models.PlataformerEntity;
-import models.SceneObject;
-import models.Sprite;
+import models.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -34,6 +31,7 @@ public class GameBoard extends JPanel implements Runnable
         setDoubleBuffered(true);
 
         plataformerEntity = new PlataformerEntity(this, "mario.png", 0, 250);
+        plataformerEntity.getAnimation().addFrameFromPath("mario_2.png");
         sceneObject = new SceneObject(this, "mario.png", 250, 250);
 
         sprites = new ArrayList<>();
@@ -59,6 +57,8 @@ public class GameBoard extends JPanel implements Runnable
             g.drawImage(plataformerEntity.getImage(), (int) plataformerEntity.getPositionX(), (int) plataformerEntity.getPositionY(), this);
         if (sceneObject.isVisible())
             g.drawImage(sceneObject.getImage(), (int) sceneObject.getPositionX(), (int) sceneObject.getPositionY(), this);
+
+        g.setColor(Color.white);
 
         // dev
         g.drawString("Colliding: " + plataformerEntity.getStringColliding(), 10, 20);
@@ -102,7 +102,7 @@ public class GameBoard extends JPanel implements Runnable
             timeDiff = System.currentTimeMillis() - beforeTime;
             sleep = DELAY - timeDiff;
 
-            System.out.println(System.currentTimeMillis() - beforeSleepTime);
+            //System.out.println(System.currentTimeMillis() - beforeSleepTime);
 
             cycle(System.currentTimeMillis() - beforeSleepTime);
             repaint();

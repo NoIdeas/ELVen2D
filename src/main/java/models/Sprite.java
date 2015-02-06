@@ -32,7 +32,6 @@ public abstract class Sprite
 
     public void update(float delay)
     {
-        // TODO: Update this so the frame delay comes from the caller of the update method
         updateAnimation(delay);
     }
 
@@ -58,14 +57,8 @@ public abstract class Sprite
 
     private void loadImage(String imagePath)
     {
-        URL imageUrl = this.getClass().getClassLoader().getResource(imagePath);
-        Image image = new ImageIcon(imageUrl).getImage();
-
         this.animation.clear();
-        this.animation.addFrame(image);
-
-        this.width = image.getWidth(null);
-        this.height = image.getHeight(null);
+        this.animation.addFrameFromPath(imagePath);
     }
 
     public Image getImage()

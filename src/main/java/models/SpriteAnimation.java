@@ -1,6 +1,8 @@
 package models;
 
+import javax.swing.*;
 import java.awt.*;
+import java.net.URL;
 import java.util.ArrayList;
 
 /**
@@ -23,6 +25,7 @@ public class SpriteAnimation
     public SpriteAnimation()
     {
         frames = new ArrayList<Image>();
+        frameDelay = 1000.0f / 24;
     }
 
     /**
@@ -42,6 +45,14 @@ public class SpriteAnimation
     public void addFrame(Image image)
     {
         frames.add(image);
+    }
+
+    public void addFrameFromPath(String path)
+    {
+        URL imageUrl = this.getClass().getClassLoader().getResource(path);
+        Image image = new ImageIcon(imageUrl).getImage();
+
+        addFrame(image);
     }
 
     public void removeFrame(Image image)
@@ -86,7 +97,7 @@ public class SpriteAnimation
         // Truncate the value so we don't crash with an index out of bounds error
         currentDelay = currentDelay % getDuration();
 
-        return frameAt((int)Math.floor(currentDelay));
+        return frameAt((int)Math.floor(currentDelay / frameDelay));
     }
 
     public float getFrameDelay()
