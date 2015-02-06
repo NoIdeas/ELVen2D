@@ -17,7 +17,7 @@ public class PlataformerEntity extends MovableEntity
     }
 
     @Override
-    public void update()
+    public void update(float delay)
     {
         KeyboardListener keyboardListener = KeyboardListener.getInstance();
 
@@ -75,7 +75,7 @@ public class PlataformerEntity extends MovableEntity
             super.setColliding(CollisionSide.DOWN);
         }
 
-        super.update();
+        super.update(delay);
         super.checkCollision();
     }
 }

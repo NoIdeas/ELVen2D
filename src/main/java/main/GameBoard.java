@@ -33,8 +33,8 @@ public class GameBoard extends JPanel implements Runnable
         setPreferredSize(new Dimension(B_WIDTH, B_HEIGHT));
         setDoubleBuffered(true);
 
-        plataformerEntity = new PlataformerEntity(this, "C:/Users/duds410/Desktop/mario.png", 0, 250);
-        sceneObject = new SceneObject(this, "C:/Users/duds410/Desktop/mario.png", 250, 250);
+        plataformerEntity = new PlataformerEntity(this, "mario.png", 0, 250);
+        sceneObject = new SceneObject(this, "mario.png", 250, 250);
 
         sprites = new ArrayList<>();
         sprites.add(plataformerEntity);
@@ -75,9 +75,9 @@ public class GameBoard extends JPanel implements Runnable
         Toolkit.getDefaultToolkit().sync();
     }
 
-    private void cycle()
+    private void cycle(float delay)
     {
-        plataformerEntity.update();
+        plataformerEntity.update(delay);
 
         if (plataformerEntity.getPositionY() > B_HEIGHT)
             plataformerEntity.setPositionY(0);
@@ -92,18 +92,22 @@ public class GameBoard extends JPanel implements Runnable
     @Override
     public void run()
     {
-        long beforeTime, timeDiff, sleep;
+        long beforeTime, beforeSleepTime = System.currentTimeMillis(), timeDiff, sleep;
         beforeTime = System.currentTimeMillis();
 
         plataformerEntity.setSpeed(2);
 
         while (true)
         {
-            cycle();
-            repaint();
-
             timeDiff = System.currentTimeMillis() - beforeTime;
             sleep = DELAY - timeDiff;
+
+            System.out.println(System.currentTimeMillis() - beforeSleepTime);
+
+            cycle(System.currentTimeMillis() - beforeSleepTime);
+            repaint();
+
+            beforeSleepTime = System.currentTimeMillis();
 
             if (sleep < 0)
             {

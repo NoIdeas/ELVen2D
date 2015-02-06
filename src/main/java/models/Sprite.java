@@ -5,6 +5,7 @@ import main.GameBoard;
 
 import javax.swing.*;
 import java.awt.*;
+import java.net.URL;
 
 /**
  * Created by NoIdeas.
@@ -15,12 +16,30 @@ public abstract class Sprite
     public GameBoard gameBoard;
 
     private boolean visible = true;
-    private Image image;
+
+    private SpriteAnimation animation;
+
     //private int imagePosition;
     private int width;
     private int height;
     private float positionX;
     private float positionY;
+
+    public Sprite()
+    {
+        animation = new SpriteAnimation();
+    }
+
+    public void update(float delay)
+    {
+        // TODO: Update this so the frame delay comes from the caller of the update method
+        updateAnimation(delay);
+    }
+
+    private void updateAnimation(float delay)
+    {
+        animation.updateAnimation(delay);
+    }
 
     public void show()
     {
@@ -39,14 +58,19 @@ public abstract class Sprite
 
     private void loadImage(String imagePath)
     {
-        this.image = new ImageIcon(imagePath).getImage();
-        this.width = this.image.getWidth(null);
-        this.height = this.image.getHeight(null);
+        URL imageUrl = this.getClass().getClassLoader().getResource(imagePath);
+        Image image = new ImageIcon(imageUrl).getImage();
+
+        this.animation.clear();
+        this.animation.addFrame(image);
+
+        this.width = image.getWidth(null);
+        this.height = image.getHeight(null);
     }
 
     public Image getImage()
     {
-        return this.image;
+        return this.animation.getCurrentFrame();
     }
 
     public void setImage(String imagePath)
@@ -57,6 +81,16 @@ public abstract class Sprite
     public float getPositionX()
     {
         return this.positionX;
+    }
+
+    public SpriteAnimation getAnimation()
+    {
+        return animation;
+    }
+
+    public void setAnimation(SpriteAnimation animation)
+    {
+        this.animation = animation;
     }
 
     public void setPositionX(float positionX)
@@ -76,17 +110,19 @@ public abstract class Sprite
 
     public int getWidth()
     {
-        return this.width;
+        Image image = animation.getCurrentFrame();
+        return image == null ? 0 : image.getWidth(null);
     }
 
     public int getHeight()
     {
-        return this.height;
+        Image image = animation.getCurrentFrame();
+        return image == null ? 0 : image.getHeight(null);
     }
 
     public Rectangle2D getBounds()
     {
-        return new Rectangle2D(this.positionX, this.positionY, this.width, this.height);
+        return new Rectangle2D(this.positionX, this.positionY, this.getWidth(), this.getHeight());
     }
 
     /**

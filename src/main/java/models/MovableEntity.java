@@ -13,8 +13,11 @@ public abstract class MovableEntity extends Sprite
     private float speedX = 10;
     private float speedY = 10;
 
-    public void update()
+    @Override
+    public void update(float delay)
     {
+        super.update(delay);
+
         super.setPositionX(super.getPositionX() + (this.getSpeedX() * this.getDirectionX()));
         super.setPositionY(super.getPositionY() + (this.getSpeedY() * this.getDirectionY()));
     }
