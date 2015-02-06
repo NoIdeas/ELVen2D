@@ -6,17 +6,16 @@ import java.net.URL;
 import java.util.ArrayList;
 
 /**
- * Created by luizfernandosilva on 06/02/15.
+ * Created by NoIdeas.
  */
+
 public class SpriteAnimation
 {
     private ArrayList<Image> frames;
-
     /**
      * Delay between frames, in milliseconds
      */
     private float frameDelay;
-
     /**
      * The current delay of the animation, between [0, duration)
      */
@@ -24,7 +23,7 @@ public class SpriteAnimation
 
     public SpriteAnimation()
     {
-        frames = new ArrayList<Image>();
+        frames = new ArrayList<>();
         frameDelay = 1000.0f / 24;
     }
 

@@ -32,13 +32,13 @@ public abstract class MovableEntity extends Sprite
 
     public CollisionSide checkCollision()
     {
-        Rectangle2D entityCollisionBox = this.getBounds();
+        Rectangle2D entityCollisionBox = this.getCollisionBox();
         float entityCenterX = super.getPositionX() + super.getWidth() / 2;
         float entityCenterY = super.getPositionY() + super.getHeight() / 2;
 
         for (Sprite obstacle : gameBoard.sprites)
         {
-            Rectangle2D obstacleCollisionBox = obstacle.getBounds();
+            Rectangle2D obstacleCollisionBox = obstacle.getCollisionBox();
             float obstacleCenterX = obstacle.getPositionX() + obstacle.getWidth() / 2;
             float obstacleCenterY = obstacle.getPositionY() + obstacle.getHeight() / 2;
 
@@ -95,7 +95,7 @@ public abstract class MovableEntity extends Sprite
         MoveDirection moveDirection = null;
 
         Rectangle2D nextStep = null;
-        Rectangle2D entityCollisionBox = this.getBounds();
+        Rectangle2D entityCollisionBox = this.getCollisionBox();
 
         if (this.getDirectionX() != 0)
         {
@@ -128,7 +128,7 @@ public abstract class MovableEntity extends Sprite
         {
             for (Sprite sprite : gameBoard.sprites)
             {
-                Rectangle2D spriteCollisionBox = sprite.getBounds();
+                Rectangle2D spriteCollisionBox = sprite.getCollisionBox();
                 if (spriteCollisionBox.intersects(nextStep))
                 {
                     switch (moveDirection)
@@ -161,7 +161,7 @@ public abstract class MovableEntity extends Sprite
     public boolean isSideFree(CollisionSide side)
     {
         Rectangle2D collisionLine = null;
-        Rectangle2D entityCollisionBox = this.getBounds();
+        Rectangle2D entityCollisionBox = this.getCollisionBox();
 
         switch (side)
         {
@@ -178,13 +178,13 @@ public abstract class MovableEntity extends Sprite
                 collisionLine = new Rectangle2D(entityCollisionBox.getMinX(), entityCollisionBox.getMaxY() + 1, this.getWidth(), 1);
                 break;
             case NONE:
-                collisionLine = this.getBounds();
+                collisionLine = this.getCollisionBox();
                 break;
         }
 
         for (Sprite sprite : gameBoard.sprites)
         {
-            if (sprite.getBounds().intersects(collisionLine) && sprite != this)
+            if (sprite.getCollisionBox().intersects(collisionLine) && sprite != this)
             {
                 return false;
             }

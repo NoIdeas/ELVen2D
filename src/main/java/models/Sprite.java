@@ -3,9 +3,7 @@ package models;
 import javafx.geometry.Rectangle2D;
 import main.GameBoard;
 
-import javax.swing.*;
 import java.awt.*;
-import java.net.URL;
 
 /**
  * Created by NoIdeas.
@@ -14,11 +12,8 @@ import java.net.URL;
 public abstract class Sprite
 {
     public GameBoard gameBoard;
-
-    private boolean visible = true;
-
+    private boolean visible;
     private SpriteAnimation animation;
-
     //private int imagePosition;
     private int width;
     private int height;
@@ -27,6 +22,9 @@ public abstract class Sprite
 
     public Sprite()
     {
+        this.show();
+        this.setPositionX(0);
+        this.setPositionY(0);
         animation = new SpriteAnimation();
     }
 
@@ -40,6 +38,11 @@ public abstract class Sprite
         animation.updateAnimation(delay);
     }
 
+    public boolean isVisible()
+    {
+        return this.visible;
+    }
+
     public void show()
     {
         this.visible = true;
@@ -48,11 +51,6 @@ public abstract class Sprite
     public void hide()
     {
         this.visible = false;
-    }
-
-    public boolean isVisible()
-    {
-        return this.visible;
     }
 
     private void loadImage(String imagePath)
@@ -71,11 +69,6 @@ public abstract class Sprite
         loadImage(imagePath);
     }
 
-    public float getPositionX()
-    {
-        return this.positionX;
-    }
-
     public SpriteAnimation getAnimation()
     {
         return animation;
@@ -84,6 +77,11 @@ public abstract class Sprite
     public void setAnimation(SpriteAnimation animation)
     {
         this.animation = animation;
+    }
+
+    public float getPositionX()
+    {
+        return this.positionX;
     }
 
     public void setPositionX(float positionX)
@@ -113,7 +111,7 @@ public abstract class Sprite
         return image == null ? 0 : image.getHeight(null);
     }
 
-    public Rectangle2D getBounds()
+    public Rectangle2D getCollisionBox()
     {
         return new Rectangle2D(this.positionX, this.positionY, this.getWidth(), this.getHeight());
     }
@@ -124,7 +122,8 @@ public abstract class Sprite
      *
      * @param a A rectangle
      * @param b Another rectangle
-     * @return A rectangle that represents the intersection of the two rectangles, that is, the area that they are colliding on
+     * @return A rectangle that represents the intersection of the two rectangles, that is, the area that they are
+     * colliding on
      */
     public static Rectangle2D intersect(Rectangle2D a, Rectangle2D b)
     {
