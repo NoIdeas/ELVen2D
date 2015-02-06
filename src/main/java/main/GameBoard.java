@@ -17,7 +17,7 @@ public class GameBoard extends JPanel implements Runnable
 {
     public final int B_WIDTH = 500;
     public final int B_HEIGHT = 500;
-    private final int DELAY = 17;
+    private final int DELAY = 16;
     private Thread animator;
 
     // Sprites
@@ -62,8 +62,9 @@ public class GameBoard extends JPanel implements Runnable
 
         // dev
         g.drawString("Colliding: " + plataformerEntity.getStringColliding(), 10, 20);
-        g.drawString("DirectionX: " + plataformerEntity.getDirectionX(), 10, 35);
-        g.drawString("DirectionY: " + plataformerEntity.getDirectionY(), 10, 50);
+        g.drawString("Speed: " + plataformerEntity.getSpeed(), 10, 35);
+        g.drawString("DirectionX: " + plataformerEntity.getDirectionX(), 10, 50);
+        g.drawString("DirectionY: " + plataformerEntity.getDirectionY(), 10, 65);
 
         KeyboardListener kListener = KeyboardListener.getInstance();
         g.drawString("isLeftKeyPressed: " + kListener.isLeftKeyPressed(), 200, 20);
