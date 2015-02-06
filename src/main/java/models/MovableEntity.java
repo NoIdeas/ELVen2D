@@ -19,57 +19,38 @@ public abstract class MovableEntity extends Sprite
         super.setPositionY(super.getPositionY() + (this.getSpeedY() * this.getDirectionY()));
     }
 
-    public float getSpeed()
-    {
-        if (this.getSpeedY() == this.getSpeedX())
-        {
-            return this.getSpeedX();
-        }
-        else
-        {
-            return 0;
-        }
-    }
-
-    public void setSpeed(float speed)
-    {
-        this.speedX = speed;
-        this.speedY = speed;
-    }
-
     public CollisionSide checkCollision()
     {
-        Rectangle2D collisionRectangle = this.getBounds();
+        Rectangle2D entityRectangle = this.getBounds();
+        float entityCenterX = super.getPositionX() + super.getWidth() / 2;
+        float entityCenterY = super.getPositionY() + super.getHeight() / 2;
 
-        float collisionCenterX = super.getPositionX() + super.getWidth() / 2;
-        float collisionCenterY = super.getPositionY() + super.getHeight() / 2;
-
-        for (Sprite sprite : gameBoard.sprites)
+        for (Sprite obstacle : gameBoard.sprites)
         {
-            float obstacleCenterX = sprite.getPositionX() + sprite.getWidth() / 2;
-            float obstacleCenterY = sprite.getPositionY() + sprite.getHeight() / 2;
+            Rectangle2D obstacleRectangle = obstacle.getBounds();
+            float obstacleCenterX = obstacle.getPositionX() + obstacle.getWidth() / 2;
+            float obstacleCenterY = obstacle.getPositionY() + obstacle.getHeight() / 2;
 
-            Rectangle2D aqueleRectangle = sprite.getBounds();
-
-            if (sprite.getBounds().intersects(collisionRectangle) && sprite != this)
+            if (obstacleRectangle.intersects(entityRectangle) && obstacle != this)
             {
-                float diffX = (obstacleCenterX - collisionCenterX);
-                float diffY = (obstacleCenterY - collisionCenterY);
+                Rectangle2D collisionIntersection = intersect(entityRectangle, obstacleRectangle);
+                float diffX = (obstacleCenterX - entityCenterX);
+                float diffY = (obstacleCenterY - entityCenterY);
 
-                Rectangle2D intersection = intersect(collisionRectangle, aqueleRectangle);
-
-                if(intersection.getWidth() < intersection.getHeight())
+                if(collisionIntersection.getWidth() < collisionIntersection.getHeight())
                 {
                     if(diffX < 0)
                     {
-                        super.setPositionX(super.getPositionX() + (float)intersection.getWidth());
+                        super.setPositionX(super.getPositionX() + (float)collisionIntersection.getWidth());
                         this.colliding = CollisionSide.LEFT;
+
                         return CollisionSide.LEFT;
                     }
                     else
                     {
-                        super.setPositionX(super.getPositionX() - (float)intersection.getWidth());
+                        super.setPositionX(super.getPositionX() - (float)collisionIntersection.getWidth());
                         this.colliding = CollisionSide.RIGHT;
+
                         return CollisionSide.RIGHT;
                     }
                 }
@@ -77,14 +58,16 @@ public abstract class MovableEntity extends Sprite
                 {
                     if(diffY < 0)
                     {
-                        super.setPositionY(super.getPositionY() + (float)intersection.getHeight());
+                        super.setPositionY(super.getPositionY() + (float)collisionIntersection.getHeight());
                         this.colliding = CollisionSide.UP;
+
                         return CollisionSide.UP;
                     }
                     else
                     {
-                        super.setPositionY(super.getPositionY() - (float)intersection.getHeight());
+                        super.setPositionY(super.getPositionY() - (float)collisionIntersection.getHeight());
                         this.colliding = CollisionSide.DOWN;
+
                         return CollisionSide.DOWN;
                     }
                 }
@@ -126,6 +109,20 @@ public abstract class MovableEntity extends Sprite
         return true;
     }
 
+    public float getSpeed()
+    {
+        if (this.getSpeedY() == this.getSpeedX())
+            return this.getSpeedX();
+        else
+            return 0;
+    }
+
+    public void setSpeed(float speed)
+    {
+        this.setSpeedX(speed);
+        this.setSpeedY(speed);
+    }
+
     public float getSpeedX()
     {
         return speedX;
@@ -153,7 +150,10 @@ public abstract class MovableEntity extends Sprite
 
     public void setDirectionX(int directionX)
     {
-        this.directionX = directionX;
+        if (directionX == 1 || directionX == -1 || directionX == 0)
+            this.directionX = directionX;
+        else
+            this.directionX = 0;
     }
 
     public int getDirectionY()
@@ -163,7 +163,10 @@ public abstract class MovableEntity extends Sprite
 
     public void setDirectionY(int directionY)
     {
-        this.directionY = directionY;
+        if (directionY == 1 || directionY == -1 || directionY == 0)
+            this.directionY = directionY;
+        else
+            this.directionY =0;
     }
 
     public String getStringColliding()
