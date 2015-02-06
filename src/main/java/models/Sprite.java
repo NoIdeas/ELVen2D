@@ -14,9 +14,9 @@ public abstract class Sprite
 {
     public GameBoard gameBoard;
 
-    private boolean visible;
+    private boolean visible = true;
     private Image image;
-    private int imagePosition;
+    //private int imagePosition;
     private int width;
     private int height;
     private float positionX;
@@ -88,97 +88,6 @@ public abstract class Sprite
     {
         return new Rectangle2D(this.positionX, this.positionY, this.width, this.height);
     }
-    /*
-    public CollisionSide checkCollision()
-    {
-        Rectangle2D esseRectangle = this.getBounds();
-
-        float esseCentroX = this.positionX + this.width / 2;
-        float esseCentroY = this.positionY + this.height / 2;
-
-        for (Sprite sprite : gameBoard.sprites)
-        {
-            float aqueleCentroX = sprite.positionX + sprite.width / 2;
-            float aqueleCentroY = sprite.positionY + sprite.height / 2;
-
-            Rectangle2D aqueleRectangle = sprite.getBounds();
-
-            if (sprite.getBounds().intersects(esseRectangle) && sprite != this)
-            {
-                float diffX = (aqueleCentroX - esseCentroX);
-                float diffY = (aqueleCentroY - esseCentroY);
-
-                Rectangle2D intersecao = intersect(esseRectangle, aqueleRectangle);
-
-                if(intersecao.getWidth() < intersecao.getHeight())
-                {
-                    if(diffX < 0)
-                    {
-                        this.setPositionX(this.positionX + (float)intersecao.getWidth());
-
-                        return CollisionSide.LEFT;
-                    }
-                    else
-                    {
-                        this.setPositionX(this.positionX - (float)intersecao.getWidth());
-
-                        return CollisionSide.RIGHT;
-                    }
-                }
-                else
-                {
-                    if(diffY < 0)
-                    {
-                        this.setPositionY(this.positionY + (float)intersecao.getHeight());
-
-                        return CollisionSide.UP;
-                    }
-                    else
-                    {
-                        this.setPositionY(this.positionY - (float)intersecao.getHeight());
-
-                        return CollisionSide.DOWN;
-                    }
-                }
-            }
-        }
-
-        return CollisionSide.NONE;
-    }
-
-    public boolean isSideFree(CollisionSide side)
-    {
-        Rectangle2D area;
-
-        if(side == CollisionSide.LEFT)
-        {
-            area = new Rectangle2D(this.getBounds().getMinX() - 1, this.getBounds().getMinY(), 1, this.getHeight());
-        }
-        else if(side == CollisionSide.RIGHT)
-        {
-            area = new Rectangle2D(this.getBounds().getMaxX() + 1, this.getBounds().getMinY(), 1, this.getHeight());
-        }
-        else if(side == CollisionSide.UP)
-        {
-            area = new Rectangle2D(this.getBounds().getMinX(), this.getBounds().getMinY() - 1, this.getWidth(), 1);
-        }
-        else
-        {
-            area = new Rectangle2D(this.getBounds().getMinX(), this.getBounds().getMaxY() + 1, this.getWidth(), 1);
-        }
-
-        Rectangle2D esseRectangle = this.getBounds();
-
-        for (Sprite sprite : gameBoard.sprites)
-        {
-            if (sprite.getBounds().intersects(area) && sprite != this)
-            {
-                return false;
-            }
-        }
-
-        return true;
-    }*/
 
     /**
      * Returns a rectangle that represents the intersection between two other rectangles.

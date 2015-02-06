@@ -1,7 +1,7 @@
 package main;
 
 import models.KeyboardListener;
-import models.PlataformerObject;
+import models.PlataformerEntity;
 import models.SceneObject;
 import models.Sprite;
 
@@ -22,7 +22,7 @@ public class GameBoard extends JPanel implements Runnable
 
     // Sprites
     public ArrayList<Sprite> sprites;
-    private PlataformerObject plataformerObject;
+    private PlataformerEntity plataformerEntity;
     private SceneObject sceneObject;
 
     public GameBoard()
@@ -33,11 +33,11 @@ public class GameBoard extends JPanel implements Runnable
         setPreferredSize(new Dimension(B_WIDTH, B_HEIGHT));
         setDoubleBuffered(true);
 
-        plataformerObject = new PlataformerObject(this, "C:/Users/Vitor/Desktop/mario.png", 0, 250);
-        sceneObject = new SceneObject(this, "C:/Users/Vitor/Desktop/mario.png", 250, 250);
+        plataformerEntity = new PlataformerEntity(this, "C:/Users/duds410/Desktop/mario.png", 0, 250);
+        sceneObject = new SceneObject(this, "C:/Users/duds410/Desktop/mario.png", 250, 250);
 
         sprites = new ArrayList<>();
-        sprites.add(plataformerObject);
+        sprites.add(plataformerEntity);
         sprites.add(sceneObject);
     }
 
@@ -55,34 +55,28 @@ public class GameBoard extends JPanel implements Runnable
     {
         super.paintComponent(g);
 
-        g.drawImage(plataformerObject.getImage(), (int) plataformerObject.getPositionX(), (int) plataformerObject.getPositionY(), this);
-        g.drawImage(sceneObject.getImage(), (int) sceneObject.getPositionX(), (int) sceneObject.getPositionY(), this);
+        if (plataformerEntity.isVisible())
+            g.drawImage(plataformerEntity.getImage(), (int) plataformerEntity.getPositionX(), (int) plataformerEntity.getPositionY(), this);
+        if (sceneObject.isVisible())
+            g.drawImage(sceneObject.getImage(), (int) sceneObject.getPositionX(), (int) sceneObject.getPositionY(), this);
+
+        g.drawString(plataformerEntity.getStringColliding(), 10, 20);
+
         Toolkit.getDefaultToolkit().sync();
     }
 
     private void cycle()
     {
-        plataformerObject.moveAction();
+        plataformerEntity.update();
 
-        if (plataformerObject.getPositionY() > B_HEIGHT)
-        {
-            plataformerObject.setPositionY(0);
-        }
-
-        if (plataformerObject.getPositionX() > B_WIDTH)
-        {
-            plataformerObject.setPositionX(0);
-        }
-
-        if (plataformerObject.getPositionY() < 0)
-        {
-            plataformerObject.setPositionY(B_HEIGHT);
-        }
-
-        if (plataformerObject.getPositionX() < 0)
-        {
-            plataformerObject.setPositionX(B_WIDTH);
-        }
+        if (plataformerEntity.getPositionY() > B_HEIGHT)
+            plataformerEntity.setPositionY(0);
+        if (plataformerEntity.getPositionX() > B_WIDTH)
+            plataformerEntity.setPositionX(0);
+        if (plataformerEntity.getPositionY() < 0)
+            plataformerEntity.setPositionY(B_HEIGHT);
+        if (plataformerEntity.getPositionX() < 0)
+            plataformerEntity.setPositionX(B_WIDTH);
     }
 
     @Override
@@ -90,6 +84,8 @@ public class GameBoard extends JPanel implements Runnable
     {
         long beforeTime, timeDiff, sleep;
         beforeTime = System.currentTimeMillis();
+
+        plataformerEntity.setSpeed(2);
 
         while (true)
         {
