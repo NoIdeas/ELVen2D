@@ -97,7 +97,7 @@ public class GameBoard extends JPanel implements Runnable
         long beforeTime, beforeSleepTime = System.currentTimeMillis(), timeDiff, sleep;
         beforeTime = System.currentTimeMillis();
 
-        plataformerEntity.setSpeed(70);
+        plataformerEntity.setSpeed(5);
 
         while (true)
         {

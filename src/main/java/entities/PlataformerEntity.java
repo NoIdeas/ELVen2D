@@ -55,29 +55,6 @@ public class PlataformerEntity extends MovableEntity
             super.setColliding(CollisionSide.NONE);
         }
 
-        if(super.getDirectionX() < 0 && !super.isSideFree(CollisionSide.LEFT))
-        {
-            super.setDirectionX(0);
-            super.setColliding(CollisionSide.LEFT);
-        }
-        else if(super.getDirectionX() > 0 && !super.isSideFree(CollisionSide.RIGHT))
-        {
-            super.setDirectionX(0);
-            super.setColliding(CollisionSide.RIGHT);
-        }
-
-        if(super.getDirectionY() < 0 && !super.isSideFree(CollisionSide.UP))
-        {
-            super.setDirectionY(0);
-            super.setColliding(CollisionSide.UP);
-        }
-        else if(super.getDirectionY() > 0 && !super.isSideFree(CollisionSide.DOWN))
-        {
-            super.setDirectionY(0);
-            super.setColliding(CollisionSide.DOWN);
-        }
-
         super.update(delay);
-        super.checkCollision();
     }
 }
