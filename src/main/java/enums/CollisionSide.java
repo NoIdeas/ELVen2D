@@ -1,8 +1,9 @@
 package enums;
 
 /**
- * Created by duds410.
+ * Created by NoIdeas.
  */
+
 public enum CollisionSide
 {
     LEFT,

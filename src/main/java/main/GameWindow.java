@@ -14,7 +14,7 @@ public class GameWindow extends JFrame
         this.add(new GameBoard());
 
         pack();
-        setTitle("Game Test");
+        setTitle("Elven2D");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
     }
