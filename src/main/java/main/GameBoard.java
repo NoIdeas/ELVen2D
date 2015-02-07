@@ -20,7 +20,7 @@ public class GameBoard extends JPanel implements Runnable
 
     // Sprites
     public ArrayList<Sprite> sprites;
-    private PlataformerEntity plataformerEntity;
+    private PlatformerEntity platformerEntity;
     private SceneEntity sceneEntity;
 
     public GameBoard()
@@ -31,12 +31,12 @@ public class GameBoard extends JPanel implements Runnable
         setPreferredSize(new Dimension(B_WIDTH, B_HEIGHT));
         setDoubleBuffered(true);
 
-        plataformerEntity = new PlataformerEntity(this, "mario.png", 0, 250);
-        plataformerEntity.getAnimation().addFrameFromPath("mario_2.png");
+        platformerEntity = new PlatformerEntity(this, "mario.png", 0, 250);
+        platformerEntity.getAnimation().addFrameFromPath("mario_2.png");
         sceneEntity = new SceneEntity(this, "mario.png", 250, 250);
 
         sprites = new ArrayList<>();
-        sprites.add(plataformerEntity);
+        sprites.add(platformerEntity);
         sprites.add(sceneEntity);
     }
 
@@ -54,19 +54,19 @@ public class GameBoard extends JPanel implements Runnable
     {
         super.paintComponent(g);
 
-        if (plataformerEntity.isVisible())
-            g.drawImage(plataformerEntity.getImage(), (int) plataformerEntity.getPositionX(), (int) plataformerEntity.getPositionY(), this);
+        if (platformerEntity.isVisible())
+            g.drawImage(platformerEntity.getImage(), (int) platformerEntity.getPositionX(), (int) platformerEntity.getPositionY(), this);
         if (sceneEntity.isVisible())
             g.drawImage(sceneEntity.getImage(), (int) sceneEntity.getPositionX(), (int) sceneEntity.getPositionY(), this);
 
         g.setColor(Color.white);
 
         // dev
-        g.drawString("Colliding: " + plataformerEntity.getStringColliding(), 10, 20);
-        g.drawString("Speed: " + plataformerEntity.getSpeed(), 10, 35);
-        g.drawString("DirectionX: " + plataformerEntity.getDirectionX(), 10, 50);
-        g.drawString("DirectionY: " + plataformerEntity.getDirectionY(), 10, 65);
-        g.drawString("moveDirection: " + plataformerEntity.getMoveDirection(), 10, 80);
+        g.drawString("Colliding: " + platformerEntity.getStringColliding(), 10, 20);
+        g.drawString("Speed: " + platformerEntity.getSpeed(), 10, 35);
+        g.drawString("DirectionX: " + platformerEntity.getDirectionX(), 10, 50);
+        g.drawString("DirectionY: " + platformerEntity.getDirectionY(), 10, 65);
+        g.drawString("moveDirection: " + platformerEntity.getMoveDirection(), 10, 80);
 
         KeyboardListener kListener = KeyboardListener.getInstance();
         g.drawString("isLeftKeyPressed: " + kListener.isLeftKeyPressed(), 200, 20);
@@ -79,16 +79,16 @@ public class GameBoard extends JPanel implements Runnable
 
     private void cycle(float delay)
     {
-        plataformerEntity.update(delay);
+        platformerEntity.update(delay);
 
-        if (plataformerEntity.getPositionY() > B_HEIGHT)
-            plataformerEntity.setPositionY(0);
-        if (plataformerEntity.getPositionX() > B_WIDTH)
-            plataformerEntity.setPositionX(0);
-        if (plataformerEntity.getPositionY() < 0)
-            plataformerEntity.setPositionY(B_HEIGHT);
-        if (plataformerEntity.getPositionX() < 0)
-            plataformerEntity.setPositionX(B_WIDTH);
+        if (platformerEntity.getPositionY() > B_HEIGHT)
+            platformerEntity.setPositionY(0);
+        if (platformerEntity.getPositionX() > B_WIDTH)
+            platformerEntity.setPositionX(0);
+        if (platformerEntity.getPositionY() < 0)
+            platformerEntity.setPositionY(B_HEIGHT);
+        if (platformerEntity.getPositionX() < 0)
+            platformerEntity.setPositionX(B_WIDTH);
     }
 
     @Override
@@ -97,7 +97,7 @@ public class GameBoard extends JPanel implements Runnable
         long beforeTime, beforeSleepTime = System.currentTimeMillis(), timeDiff, sleep;
         beforeTime = System.currentTimeMillis();
 
-        plataformerEntity.setSpeed(5);
+        platformerEntity.setSpeed(5);
 
         while (true)
         {

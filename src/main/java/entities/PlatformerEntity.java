@@ -8,9 +8,9 @@ import main.GameBoard;
  * Created by NoIdeas.
  */
 
-public class PlataformerEntity extends MovableEntity
+public class PlatformerEntity extends MovableEntity
 {
-    public PlataformerEntity(GameBoard gameBoard, String imagePath, float positionX, float positionY)
+    public PlatformerEntity(GameBoard gameBoard, String imagePath, float positionX, float positionY)
     {
         super.gameBoard = gameBoard;
         super.setImage(imagePath);
