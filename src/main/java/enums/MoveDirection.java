@@ -13,5 +13,6 @@ public enum MoveDirection
     LEFTUP,
     LEFTDOWN,
     RIGHTUP,
-    RIGHTDOWN
+    RIGHTDOWN,
+    STOPPED
 }

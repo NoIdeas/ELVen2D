@@ -66,6 +66,7 @@ public class GameBoard extends JPanel implements Runnable
         g.drawString("Speed: " + plataformerEntity.getSpeed(), 10, 35);
         g.drawString("DirectionX: " + plataformerEntity.getDirectionX(), 10, 50);
         g.drawString("DirectionY: " + plataformerEntity.getDirectionY(), 10, 65);
+        g.drawString("moveDirection: " + plataformerEntity.getMoveDirection(), 10, 80);
 
         KeyboardListener kListener = KeyboardListener.getInstance();
         g.drawString("isLeftKeyPressed: " + kListener.isLeftKeyPressed(), 200, 20);
