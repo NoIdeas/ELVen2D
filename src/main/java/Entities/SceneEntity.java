@@ -9,8 +9,6 @@ import main.GameBoard;
 
 public class SceneEntity extends Sprite
 {
-    private boolean solid;
-
     public SceneEntity(GameBoard gameBoard, String imagePath, float positionX, float positionY)
     {
         super.gameBoard = gameBoard;
