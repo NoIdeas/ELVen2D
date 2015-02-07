@@ -1,4 +1,4 @@
-package entities;
+package entity;
 
 import enums.CollisionSide;
 import helpers.KeyboardListener;

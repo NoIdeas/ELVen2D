@@ -1,6 +1,6 @@
 package main;
 
-import entities.*;
+import entity.*;
 import helpers.KeyboardListener;
 
 import javax.swing.*;
