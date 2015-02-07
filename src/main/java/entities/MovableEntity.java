@@ -50,12 +50,12 @@ public abstract class MovableEntity extends Sprite
                 if (this.getDirectionX() < 0)
                 {
                     nextStep = new Rectangle2D(entityCollisionBox.getMinX() - this.getSpeedX(), entityCollisionBox.getMinY(), this.getSpeedX(), this.getHeight());
-                    this.moveDirection = MoveDirection.LEFT;
+                    this.setMoveDirection(MoveDirection.LEFT);
                 }
                 else
                 {
                     nextStep = new Rectangle2D(entityCollisionBox.getMinX() + entityCollisionBox.getWidth(), entityCollisionBox.getMinY(), this.getSpeedX(), this.getHeight());
-                    this.moveDirection = MoveDirection.RIGHT;
+                    this.setMoveDirection(MoveDirection.RIGHT);
                 }
             }
             else
@@ -63,12 +63,12 @@ public abstract class MovableEntity extends Sprite
                 if (this.getDirectionY() < 0)
                 {
                     nextStep = new Rectangle2D(entityCollisionBox.getMinX(), entityCollisionBox.getMinY() - this.getSpeedY(), this.getWidth(), this.getSpeedY());
-                    this.moveDirection = MoveDirection.UP;
+                    this.setMoveDirection(MoveDirection.UP);
                 }
                 else
                 {
                     nextStep = new Rectangle2D(entityCollisionBox.getMinX(), entityCollisionBox.getMinY() + entityCollisionBox.getHeight(), this.getWidth(), this.getSpeedY());
-                    this.moveDirection = MoveDirection.DOWN;
+                    this.setMoveDirection(MoveDirection.DOWN);
                 }
             }
         }
@@ -78,27 +78,27 @@ public abstract class MovableEntity extends Sprite
             {
                 if (this.getDirectionY() < 0)
                 {
-                    this.moveDirection = MoveDirection.LEFTUP;
+                    this.setMoveDirection(MoveDirection.LEFTUP);
                 }
                 else
                 {
-                    this.moveDirection = MoveDirection.LEFTDOWN;
+                    this.setMoveDirection(MoveDirection.LEFTDOWN);
                 }
             }
             else if (this.getDirectionX() > 0)
             {
                 if (this.getDirectionY() < 0)
                 {
-                    this.moveDirection = MoveDirection.RIGHTUP;
+                    this.setMoveDirection(MoveDirection.RIGHTUP);
                 }
                 else
                 {
-                    this.moveDirection = MoveDirection.RIGHTDOWN;
+                    this.setMoveDirection(MoveDirection.RIGHTDOWN);
                 }
             }
         }
         else
-            this.moveDirection = MoveDirection.STOPPED;
+            this.setMoveDirection(MoveDirection.STOPPED);
 
         if (nextStep != null)
         {
@@ -107,7 +107,7 @@ public abstract class MovableEntity extends Sprite
                 Rectangle2D spriteCollisionBox = sprite.getCollisionBox();
                 if (spriteCollisionBox.intersects(nextStep))
                 {
-                    switch (this.moveDirection)
+                    switch (this.getMoveDirection())
                     {
                         case LEFT:
                             tempSpeed = (float) nextStep.getMaxX() - (float) spriteCollisionBox.getMaxX();
@@ -305,6 +305,11 @@ public abstract class MovableEntity extends Sprite
     public MoveDirection getMoveDirection()
     {
         return this.moveDirection;
+    }
+
+    public void setMoveDirection(MoveDirection moveDirection)
+    {
+        this.moveDirection = moveDirection;
     }
 
     public String getStringColliding()
