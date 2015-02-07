@@ -1,4 +1,5 @@
 package entities;
+
 import enums.CollisionSide;
 import enums.MoveDirection;
 import javafx.geometry.Rectangle2D;
@@ -43,18 +44,21 @@ public abstract class MovableEntity extends Sprite
         Rectangle2D nextStep = null;
         Rectangle2D entityCollisionBox = this.getCollisionBox();
 
-        if ((this.getDirectionX() == 0 && this.getDirectionY() != 0) || (this.getDirectionY() == 0 && this.getDirectionX() != 0))
+        if ((this.getDirectionX() == 0 && this.getDirectionY() != 0) || (this.getDirectionY() == 0 && this
+                .getDirectionX() != 0))
         {
             if (this.getDirectionX() != 0)
             {
                 if (this.getDirectionX() < 0)
                 {
-                    nextStep = new Rectangle2D(entityCollisionBox.getMinX() - this.getSpeedX(), entityCollisionBox.getMinY(), this.getSpeedX(), this.getHeight());
+                    nextStep = new Rectangle2D(entityCollisionBox.getMinX() - this.getSpeedX(), entityCollisionBox
+                            .getMinY(), this.getSpeedX(), this.getHeight());
                     this.setMoveDirection(MoveDirection.LEFT);
                 }
                 else
                 {
-                    nextStep = new Rectangle2D(entityCollisionBox.getMinX() + entityCollisionBox.getWidth(), entityCollisionBox.getMinY(), this.getSpeedX(), this.getHeight());
+                    nextStep = new Rectangle2D(entityCollisionBox.getMinX() + entityCollisionBox.getWidth(),
+                            entityCollisionBox.getMinY(), this.getSpeedX(), this.getHeight());
                     this.setMoveDirection(MoveDirection.RIGHT);
                 }
             }
@@ -62,17 +66,20 @@ public abstract class MovableEntity extends Sprite
             {
                 if (this.getDirectionY() < 0)
                 {
-                    nextStep = new Rectangle2D(entityCollisionBox.getMinX(), entityCollisionBox.getMinY() - this.getSpeedY(), this.getWidth(), this.getSpeedY());
+                    nextStep = new Rectangle2D(entityCollisionBox.getMinX(), entityCollisionBox.getMinY() - this
+                            .getSpeedY(), this.getWidth(), this.getSpeedY());
                     this.setMoveDirection(MoveDirection.UP);
                 }
                 else
                 {
-                    nextStep = new Rectangle2D(entityCollisionBox.getMinX(), entityCollisionBox.getMinY() + entityCollisionBox.getHeight(), this.getWidth(), this.getSpeedY());
+                    nextStep = new Rectangle2D(entityCollisionBox.getMinX(), entityCollisionBox.getMinY() +
+                            entityCollisionBox.getHeight(), this.getWidth(), this.getSpeedY());
                     this.setMoveDirection(MoveDirection.DOWN);
                 }
             }
         }
-        else if ((this.getDirectionX() < 0 || this.getDirectionX() > 0) && (this.getDirectionY() < 0 || this.getDirectionY() > 0))
+        else if ((this.getDirectionX() < 0 || this.getDirectionX() > 0) && (this.getDirectionY() < 0 || this
+                .getDirectionY() > 0))
         {
             if (this.getDirectionX() < 0)
             {
@@ -136,23 +143,23 @@ public abstract class MovableEntity extends Sprite
 
     public void isSideFree()
     {
-        if(this.getDirectionX() < 0 && !this.isSideFree(CollisionSide.LEFT))
+        if (this.getDirectionX() < 0 && !this.isSideFree(CollisionSide.LEFT))
         {
             this.setDirectionX(0);
             this.setColliding(CollisionSide.LEFT);
         }
-        else if(this.getDirectionX() > 0 && !this.isSideFree(CollisionSide.RIGHT))
+        else if (this.getDirectionX() > 0 && !this.isSideFree(CollisionSide.RIGHT))
         {
             this.setDirectionX(0);
             this.setColliding(CollisionSide.RIGHT);
         }
 
-        if(this.getDirectionY() < 0 && !this.isSideFree(CollisionSide.UP))
+        if (this.getDirectionY() < 0 && !this.isSideFree(CollisionSide.UP))
         {
             this.setDirectionY(0);
             this.setColliding(CollisionSide.UP);
         }
-        else if(this.getDirectionY() > 0 && !this.isSideFree(CollisionSide.DOWN))
+        else if (this.getDirectionY() > 0 && !this.isSideFree(CollisionSide.DOWN))
         {
             this.setDirectionY(0);
             this.setColliding(CollisionSide.DOWN);
@@ -167,16 +174,20 @@ public abstract class MovableEntity extends Sprite
         switch (side)
         {
             case LEFT:
-                collisionLine = new Rectangle2D(entityCollisionBox.getMinX() - 1, entityCollisionBox.getMinY(), 1, this.getHeight());
+                collisionLine = new Rectangle2D(entityCollisionBox.getMinX() - 1, entityCollisionBox.getMinY(), 1,
+                        this.getHeight());
                 break;
             case RIGHT:
-                collisionLine = new Rectangle2D(entityCollisionBox.getMaxX(), entityCollisionBox.getMinY(), 1, this.getHeight());
+                collisionLine = new Rectangle2D(entityCollisionBox.getMaxX(), entityCollisionBox.getMinY(), 1, this
+                        .getHeight());
                 break;
             case UP:
-                collisionLine = new Rectangle2D(entityCollisionBox.getMinX(), entityCollisionBox.getMinY() - 1, this.getWidth(), 1);
+                collisionLine = new Rectangle2D(entityCollisionBox.getMinX(), entityCollisionBox.getMinY() - 1, this
+                        .getWidth(), 1);
                 break;
             case DOWN:
-                collisionLine = new Rectangle2D(entityCollisionBox.getMinX(), entityCollisionBox.getMaxY(), this.getWidth(), 1);
+                collisionLine = new Rectangle2D(entityCollisionBox.getMinX(), entityCollisionBox.getMaxY(), this
+                        .getWidth(), 1);
                 break;
             case NONE:
                 collisionLine = this.getCollisionBox();
@@ -212,29 +223,29 @@ public abstract class MovableEntity extends Sprite
                 float diffX = (obstacleCenterX - entityCenterX);
                 float diffY = (obstacleCenterY - entityCenterY);
 
-                if(collisionIntersection.getWidth() < collisionIntersection.getHeight())
+                if (collisionIntersection.getWidth() < collisionIntersection.getHeight())
                 {
-                    if(diffX < 0)
+                    if (diffX < 0)
                     {
-                        super.setPositionX(super.getPositionX() + (float)collisionIntersection.getWidth());
+                        super.setPositionX(super.getPositionX() + (float) collisionIntersection.getWidth());
                         this.colliding = CollisionSide.LEFT;
                     }
                     else
                     {
-                        super.setPositionX(super.getPositionX() - (float)collisionIntersection.getWidth());
+                        super.setPositionX(super.getPositionX() - (float) collisionIntersection.getWidth());
                         this.colliding = CollisionSide.RIGHT;
                     }
                 }
                 else
                 {
-                    if(diffY < 0)
+                    if (diffY < 0)
                     {
-                        super.setPositionY(super.getPositionY() + (float)collisionIntersection.getHeight());
+                        super.setPositionY(super.getPositionY() + (float) collisionIntersection.getHeight());
                         this.colliding = CollisionSide.UP;
                     }
                     else
                     {
-                        super.setPositionY(super.getPositionY() - (float)collisionIntersection.getHeight());
+                        super.setPositionY(super.getPositionY() - (float) collisionIntersection.getHeight());
                         this.colliding = CollisionSide.DOWN;
                     }
                 }
@@ -299,7 +310,7 @@ public abstract class MovableEntity extends Sprite
         if (directionY == 1 || directionY == -1 || directionY == 0)
             this.directionY = directionY;
         else
-            this.directionY =0;
+            this.directionY = 0;
     }
 
     public MoveDirection getMoveDirection()
