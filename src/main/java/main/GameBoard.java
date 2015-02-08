@@ -31,7 +31,7 @@ public class GameBoard extends JPanel implements Runnable
         setPreferredSize(new Dimension(B_WIDTH, B_HEIGHT));
         setDoubleBuffered(true);
 
-        platformerEntity = new PlatformerEntity(this, "mario.png", 0, 250);
+        platformerEntity = new PlatformerEntity(this, "mario.png", 250, 0, 70, 70);
         platformerEntity.getAnimation().addFrameFromPath("mario_2.png");
         sceneEntity = new SceneEntity(this, "mario.png", 250, 250);
 
@@ -63,10 +63,11 @@ public class GameBoard extends JPanel implements Runnable
 
         // dev
         g.drawString("Colliding: " + platformerEntity.getStringColliding(), 10, 20);
-        g.drawString("Speed: " + platformerEntity.getSpeed(), 10, 35);
-        g.drawString("DirectionX: " + platformerEntity.getDirectionX(), 10, 50);
-        g.drawString("DirectionY: " + platformerEntity.getDirectionY(), 10, 65);
-        g.drawString("moveDirection: " + platformerEntity.getMoveDirection(), 10, 80);
+        g.drawString("VelocityX: " + platformerEntity.getVelocityX(), 10, 35);
+        g.drawString("VelocityY: " + platformerEntity.getVelocityY(), 10, 50);
+        g.drawString("ForceX: " + platformerEntity.getForceX(), 10, 65);
+        g.drawString("ForceY: " + platformerEntity.getForceY(), 10, 80);
+        g.drawString("moveDirection: " + platformerEntity.getMoveDirection(), 10, 95);
 
         KeyboardListener kListener = KeyboardListener.getInstance();
         g.drawString("isLeftKeyPressed: " + kListener.isLeftKeyPressed(), 200, 20);
@@ -96,8 +97,6 @@ public class GameBoard extends JPanel implements Runnable
     {
         long beforeTime, beforeSleepTime = System.currentTimeMillis(), timeDiff, sleep;
         beforeTime = System.currentTimeMillis();
-
-        platformerEntity.setSpeed(5);
 
         while (true)
         {
