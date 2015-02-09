@@ -50,7 +50,6 @@ public class PlatformerEntity extends MovableEntity
             super.setColliding(CollisionSide.NONE);
         }
 
-        super.setVelocity(0,0);
         super.update(delay);
     }
 
