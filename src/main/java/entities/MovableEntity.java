@@ -10,42 +10,45 @@ import javafx.geometry.Rectangle2D;
 
 public abstract class MovableEntity extends Sprite
 {
-    private CollisionSide colliding = CollisionSide.NONE;
-    private MoveDirection moveDirection = MoveDirection.STOPPED;
     private float velocityX = 0;
     private float velocityY = 0;
     private float forceX = 0;
     private float forceY = 0;
+    private float speedX = 0;
+    private float speedY = 0;
+    private MoveDirection moveDirection = MoveDirection.STOPPED;
+    private CollisionSide collisionSide = CollisionSide.NONE;
 
     @Override
     public void update(float delay)
     {
         super.update(delay);
 
-        if (this.getColliding() == CollisionSide.NONE)
-        {
-            this.applyForce();
-        }
+        this.applyForce();
         this.updateMoveDirection();
         this.updateCollisionSide();
 
-        this.tryMove();
-        this.move();
-        //this.checkCollision();
-        this.airFriction();
+        if (this.getCollisionSide() == CollisionSide.NONE)
+        {
+            this.tryMove();
+            this.move();
+        }
+        else
+        {
+            this.setMoveDirection(MoveDirection.STOPPED);
+            this.setVelocity(0,0);
+        }
+
+        this.setForceX(0);
+        this.setForceY(0);
+
+        this.checkCollision();
     }
 
     private void applyForce()
     {
         this.setVelocityX(this.getVelocityX() + this.getForceX());
         this.setVelocityY(this.getVelocityY() + this.getForceY());
-        this.setForceX(0);
-        this.setForceY(0);
-    }
-
-    private void airFriction()
-    {
-
     }
 
     private void updateMoveDirection()
@@ -73,23 +76,21 @@ public abstract class MovableEntity extends Sprite
 
     private void updateCollisionSide()
     {
-        switch (this.getMoveDirection())
+        if (this.getForceX() != 0 || this.getForceY() != 0)
         {
-            case LEFT:
-                this.setColliding(this.isSideFree(CollisionSide.LEFT) ? CollisionSide.NONE : CollisionSide.LEFT);
-                break;
-            case RIGHT:
-                this.setColliding(this.isSideFree(CollisionSide.RIGHT) ? CollisionSide.NONE : CollisionSide.RIGHT);
-                break;
-            case UP:
-                this.setColliding(this.isSideFree(CollisionSide.UP) ? CollisionSide.NONE : CollisionSide.UP);
-                break;
-            case DOWN:
-                this.setColliding(this.isSideFree(CollisionSide.DOWN) ? CollisionSide.NONE : CollisionSide.DOWN);
-                break;
-            case STOPPED:
-                this.setColliding(CollisionSide.NONE);
-                break;
+            if (this.getForceX() < 0)
+                this.setCollisionSide(this.isSideFree(CollisionSide.LEFT) ? CollisionSide.NONE : CollisionSide.LEFT);
+            else
+                this.setCollisionSide(this.isSideFree(CollisionSide.RIGHT) ? CollisionSide.NONE : CollisionSide.RIGHT);
+
+            if (this.getForceY() < 0)
+                this.setCollisionSide(this.isSideFree(CollisionSide.UP) ? CollisionSide.NONE : CollisionSide.UP);
+            else
+                this.setCollisionSide(this.isSideFree(CollisionSide.DOWN) ? CollisionSide.NONE : CollisionSide.DOWN);
+        }
+        else
+        {
+            this.setCollisionSide(CollisionSide.NONE);
         }
     }
 
@@ -128,7 +129,7 @@ public abstract class MovableEntity extends Sprite
                     {
                         case LEFT:
                             tempVelocity = (float) spriteCollisionBox.getMaxX() - (float) nextStepRect.getMaxX();
-                            this.setVelocityX(tempVelocity != 0 ? tempVelocity : -this.getVelocityX());
+                            this.setVelocityX(tempVelocity);
                             break;
                         case RIGHT:
                             tempVelocity = (float) spriteCollisionBox.getMinX() - (float) nextStepRect.getMinX();
@@ -139,9 +140,8 @@ public abstract class MovableEntity extends Sprite
                             this.setVelocityY(tempVelocity);
                             break;
                         case DOWN:
-                            tempVelocity = (float) spriteCollisionBox.getMinY() - (float) nextStepRect.getMinY();
-                            //this.setVelocityY(tempVelocity);
-                            this.setVelocityY(tempVelocity != 0 ? tempVelocity : this.getVelocityY()/2);
+                            tempVelocity = (float) spriteCollisionBox.getMinY() - (float) collisionBox.getMaxY();
+                            this.setVelocityY(tempVelocity);
                             break;
                     }
                 }
@@ -213,12 +213,12 @@ public abstract class MovableEntity extends Sprite
                     if (diffX < 0)
                     {
                         super.setPositionX(super.getPositionX() + (float) collisionIntersection.getWidth());
-                        this.colliding = CollisionSide.LEFT;
+                        this.collisionSide = CollisionSide.LEFT;
                     }
                     else
                     {
                         super.setPositionX(super.getPositionX() - (float) collisionIntersection.getWidth());
-                        this.colliding = CollisionSide.RIGHT;
+                        this.collisionSide = CollisionSide.RIGHT;
                     }
                 }
                 else
@@ -226,12 +226,12 @@ public abstract class MovableEntity extends Sprite
                     if (diffY < 0)
                     {
                         super.setPositionY(super.getPositionY() + (float) collisionIntersection.getHeight());
-                        this.colliding = CollisionSide.UP;
+                        this.collisionSide = CollisionSide.UP;
                     }
                     else
                     {
                         super.setPositionY(super.getPositionY() - (float) collisionIntersection.getHeight());
-                        this.colliding = CollisionSide.DOWN;
+                        this.collisionSide = CollisionSide.DOWN;
                     }
                 }
             }
@@ -308,16 +308,16 @@ public abstract class MovableEntity extends Sprite
         this.moveDirection = moveDirection;
     }
 
-    public CollisionSide getColliding()
+    public CollisionSide getCollisionSide()
     {
-        return this.colliding;
+        return this.collisionSide;
     }
 
     public String getStringColliding()
     {
         String r = "NONE";
 
-        switch (colliding)
+        switch (collisionSide)
         {
             case LEFT:
                 r = "LEFT";
@@ -339,8 +339,28 @@ public abstract class MovableEntity extends Sprite
         return r;
     }
 
-    public void setColliding(CollisionSide colliding)
+    public void setCollisionSide(CollisionSide collisionSide)
     {
-        this.colliding = colliding;
+        this.collisionSide = collisionSide;
+    }
+
+    public float getSpeedX()
+    {
+        return speedX;
+    }
+
+    public void setSpeedX(float speedX)
+    {
+        this.speedX = speedX;
+    }
+
+    public float getSpeedY()
+    {
+        return speedY;
+    }
+
+    public void setSpeedY(float speedY)
+    {
+        this.speedY = speedY;
     }
 }
