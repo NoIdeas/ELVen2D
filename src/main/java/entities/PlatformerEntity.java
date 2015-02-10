@@ -25,6 +25,8 @@ public class PlatformerEntity extends MovableEntity
     {
         KeyboardListener keyboardListener = KeyboardListener.getInstance();
 
+        super.setForce(0,0);
+
         if (keyboardListener.isLeftKeyPressed())
             super.addForce(-getSpeedX(), 0);
         if (keyboardListener.isRigthKeyPressed())

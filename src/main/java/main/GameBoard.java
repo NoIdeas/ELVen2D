@@ -31,7 +31,7 @@ public class GameBoard extends JPanel implements Runnable
         setPreferredSize(new Dimension(B_WIDTH, B_HEIGHT));
         setDoubleBuffered(true);
 
-        platformerEntity = new PlatformerEntity(this, "mario.png", 250, 0, 1, 1);
+        platformerEntity = new PlatformerEntity(this, "mario.png", 250, 0, 0.5f, 0.5f);
         platformerEntity.getAnimation().addFrameFromPath("mario_2.png");
         sceneEntity = new SceneEntity(this, "mario.png", 250, 250);
 
@@ -62,7 +62,7 @@ public class GameBoard extends JPanel implements Runnable
         g.setColor(Color.white);
 
         // dev
-        g.drawString("Colliding: " + platformerEntity.getStringColliding(), 10, 20);
+        g.drawString("Colliding: " + platformerEntity.getCollisionSideString(), 10, 20);
         g.drawString("VelocityX: " + platformerEntity.getVelocityX(), 10, 35);
         g.drawString("VelocityY: " + platformerEntity.getVelocityY(), 10, 50);
         g.drawString("ForceX: " + platformerEntity.getForceX(), 10, 65);
