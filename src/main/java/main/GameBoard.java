@@ -31,7 +31,7 @@ public class GameBoard extends JPanel implements Runnable
         setPreferredSize(new Dimension(B_WIDTH, B_HEIGHT));
         setDoubleBuffered(true);
 
-        platformerEntity = new PlatformerEntity(this, "mario.png", 250, 0, 0.5f, 0.5f);
+        platformerEntity = new PlatformerEntity(this, "mario.png", 250, 0, 1, 1);
         platformerEntity.getAnimation().addFrameFromPath("mario_2.png");
         sceneEntity = new SceneEntity(this, "mario.png", 250, 250);
 
