@@ -22,7 +22,10 @@ public abstract class MovableEntity extends Sprite
     {
         super.update(delay);
 
-        this.updateVelocity();
+        if (this.getColliding() == CollisionSide.NONE)
+        {
+            this.applyForce();
+        }
         this.updateMoveDirection();
         this.updateCollisionSide();
 
@@ -32,7 +35,7 @@ public abstract class MovableEntity extends Sprite
         this.airFriction();
     }
 
-    private void updateVelocity()
+    private void applyForce()
     {
         this.setVelocityX(this.getVelocityX() + this.getForceX());
         this.setVelocityY(this.getVelocityY() + this.getForceY());
@@ -52,37 +55,16 @@ public abstract class MovableEntity extends Sprite
             if (this.getVelocityX() == 0 || this.getVelocityY() == 0)
             {
                 if (this.getVelocityX() != 0)
-                {
                     this.setMoveDirection(this.getVelocityX() < 0 ? MoveDirection.LEFT : MoveDirection.RIGHT);
-                    if (this.getVelocityX() < 0)
-                        this.setMoveDirection(MoveDirection.LEFT);
-                    else if (this.getVelocityX() > 0)
-                        this.setMoveDirection(MoveDirection.RIGHT);
-                }
                 else
-                {
-                    if (this.getVelocityY() < 0)
-                        this.setMoveDirection(MoveDirection.UP);
-                    else if (this.getVelocityY() > 0)
-                        this.setMoveDirection(MoveDirection.DOWN);
-                }
+                    this.setMoveDirection(this.getVelocityY() < 0 ? MoveDirection.UP : MoveDirection.DOWN);
             }
             else
             {
                 if (this.getVelocityX() < 0)
-                {
-                    if (this.getVelocityY() < 0)
-                        this.setMoveDirection(MoveDirection.LEFTUP);
-                    else
-                        this.setMoveDirection(MoveDirection.LEFTDOWN);
-                }
+                    this.setMoveDirection(this.getVelocityY() < 0 ? MoveDirection.LEFTUP : MoveDirection.LEFTDOWN);
                 else
-                {
-                    if (this.getVelocityY() < 0)
-                        this.setMoveDirection(MoveDirection.RIGHTUP);
-                    else
-                        this.setMoveDirection(MoveDirection.RIGHTDOWN);
-                }
+                    this.setMoveDirection(this.getVelocityY() < 0 ? MoveDirection.RIGHTUP : MoveDirection.RIGHTDOWN);
             }
         }
         else
@@ -91,28 +73,19 @@ public abstract class MovableEntity extends Sprite
 
     private void updateCollisionSide()
     {
-        boolean isLeftSideFree = this.isSideFree(CollisionSide.LEFT);
-        boolean isRightSideFree = this.isSideFree(CollisionSide.RIGHT);
-        boolean isUpSideFree = this.isSideFree(CollisionSide.UP);
-        boolean isDownSideFree = this.isSideFree(CollisionSide.DOWN);
-
         switch (this.getMoveDirection())
         {
             case LEFT:
-                if (!isLeftSideFree)
-                    this.setColliding(CollisionSide.LEFT);
+                this.setColliding(this.isSideFree(CollisionSide.LEFT) ? CollisionSide.NONE : CollisionSide.LEFT);
                 break;
             case RIGHT:
-                if (!isRightSideFree)
-                    this.setColliding(CollisionSide.RIGHT);
+                this.setColliding(this.isSideFree(CollisionSide.RIGHT) ? CollisionSide.NONE : CollisionSide.RIGHT);
                 break;
             case UP:
-                if (!isUpSideFree)
-                    this.setColliding(CollisionSide.UP);
+                this.setColliding(this.isSideFree(CollisionSide.UP) ? CollisionSide.NONE : CollisionSide.UP);
                 break;
             case DOWN:
-                if (!isDownSideFree)
-                    this.setColliding(CollisionSide.DOWN);
+                this.setColliding(this.isSideFree(CollisionSide.DOWN) ? CollisionSide.NONE : CollisionSide.DOWN);
                 break;
             case STOPPED:
                 this.setColliding(CollisionSide.NONE);
