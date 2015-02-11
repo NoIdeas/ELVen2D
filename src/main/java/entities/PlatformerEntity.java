@@ -4,24 +4,22 @@ import enums.CollisionSide;
 import helpers.KeyboardListener;
 import main.GameBoard;
 
-import java.awt.event.KeyEvent;
-
 /**
  * Created by NoIdeas.
  */
 
 public class PlatformerEntity extends MovableEntity
 {
-    private boolean hasJumped = false;
+    private int timesJumped = 0;
 
-    public PlatformerEntity(GameBoard gameBoard, String imagePath, float positionX, float positionY, float speedX, float speedY)
+    public PlatformerEntity(GameBoard gameBoard, String imagePath, float positionX, float positionY, float acceleration)
     {
         super.gameBoard = gameBoard;
         super.setImage(imagePath);
         super.setPositionX(positionX);
         super.setPositionY(positionY);
-        super.setSpeedX(speedX);
-        super.setSpeedY(speedY);
+        super.setAccelerationX(acceleration);
+        super.setAccelerationY(acceleration);
     }
 
     @Override
@@ -29,30 +27,34 @@ public class PlatformerEntity extends MovableEntity
     {
         KeyboardListener keyboardListener = KeyboardListener.getInstance();
 
-        super.setForce(0,0);
+        super.resetForce();
 
         if (super.getCollisionSide() == CollisionSide.DOWN)
-            hasJumped = false;
+            this.timesJumped = 0;
 
         if (keyboardListener.isLeftKeyPressed())
-            super.addForce(-getSpeedX(), 0);
+            super.addForce(-getAccelerationX(), 0.0f);
         if (keyboardListener.isRigthKeyPressed())
-            super.addForce(getSpeedX(),0);
-
+            super.addForce(getAccelerationX(), 0.0f);
         if (keyboardListener.isUpKeyPressed())
             this.jump();
         if (keyboardListener.isDownKeyPressed())
-            super.addForce(0, getSpeedY());
+            super.addForce(0.0f, getAccelerationY());
+
+        
 
         super.update(delay);
     }
 
     private void jump()
     {
-        if (!hasJumped)
+        if (timesJumped <= 3)
         {
+            super.setVelocityY(0);
             super.addForce(0, -10);
-            this.hasJumped = true;
+            this.timesJumped++;
+            System.out.println("JUMPED BITCH");
         }
+        System.out.println("enough..");
     }
 }

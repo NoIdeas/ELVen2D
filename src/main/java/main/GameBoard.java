@@ -19,7 +19,7 @@ public class GameBoard extends JPanel implements Runnable
     private Thread animator;
 
     // Sprites
-    public ArrayList<Sprite> sprites;
+    public ArrayList<Sprite> rigidBodySprites;
     private PlatformerEntity platformerEntity;
     private SceneEntity sceneEntity;
     private SceneEntity sceneEntity1;
@@ -27,23 +27,25 @@ public class GameBoard extends JPanel implements Runnable
 
     public GameBoard()
     {
-        addKeyListener(KeyboardListener.getInstance());
+        KeyboardListener keyboardListener = KeyboardListener.getInstance();
+        addKeyListener(keyboardListener);
         setFocusable(true);
         setBackground(Color.BLACK);
         setPreferredSize(new Dimension(B_WIDTH, B_HEIGHT));
         setDoubleBuffered(true);
 
-        platformerEntity = new PlatformerEntity(this, "mario.png", 250, 0, 0.7f, 0.7f);
+        platformerEntity = new PlatformerEntity(this, "mario.png", 250, 0, 0.7f);
         platformerEntity.getAnimation().addFrameFromPath("mario_2.png");
+        keyboardListener.addControlledSprite(platformerEntity);
         sceneEntity = new SceneEntity(this, "mario.png", 250, 250);
         sceneEntity1 = new SceneEntity(this, "mario.png", 274, 250);
         sceneEntity2 = new SceneEntity(this, "mario.png", 298, 250);
 
-        sprites = new ArrayList<>();
-        sprites.add(platformerEntity);
-        sprites.add(sceneEntity);
-        sprites.add(sceneEntity1);
-        sprites.add(sceneEntity2);
+        rigidBodySprites = new ArrayList<>();
+        rigidBodySprites.add(platformerEntity);
+        rigidBodySprites.add(sceneEntity);
+        rigidBodySprites.add(sceneEntity1);
+        rigidBodySprites.add(sceneEntity2);
     }
 
     @Override
@@ -72,7 +74,7 @@ public class GameBoard extends JPanel implements Runnable
         g.setColor(Color.white);
 
         // dev
-        g.drawString("Colliding: " + platformerEntity.getCollisionSideString(), 10, 20);
+        g.drawString("Colliding: " + platformerEntity.getCollisionSide(), 10, 20);
         g.drawString("VelocityX: " + platformerEntity.getVelocityX(), 10, 35);
         g.drawString("VelocityY: " + platformerEntity.getVelocityY(), 10, 50);
         g.drawString("ForceX: " + platformerEntity.getForceX(), 10, 65);

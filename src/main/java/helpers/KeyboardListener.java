@@ -1,7 +1,10 @@
 package helpers;
 
+import entities.Sprite;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 /**
  * Created by NoIdeas.
@@ -9,6 +12,7 @@ import java.awt.event.KeyEvent;
 
 public class KeyboardListener extends KeyAdapter
 {
+    private ArrayList<Sprite> controlledSprites;
     private boolean leftKeyPressed = false;
     private boolean rigthKeyPressed = false;
     private boolean upKeyPressed = false;
@@ -60,6 +64,11 @@ public class KeyboardListener extends KeyAdapter
 
         if (key == KeyEvent.VK_DOWN)
             downpKeyPressed = false;
+    }
+
+    public void addControlledSprite(Sprite sprite)
+    {
+        this.controlledSprites.add(sprite);
     }
 
     public boolean isLeftKeyPressed()
