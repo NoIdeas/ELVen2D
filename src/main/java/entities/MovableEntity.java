@@ -24,7 +24,8 @@ public abstract class MovableEntity extends Sprite
     {
         super.update(delay);
 
-        this.airFriction();
+        this.gravity();
+        this.groundFriction();
         this.applyForce();
         this.updateCollisionSide();
         this.updateMoveDirection();
@@ -52,6 +53,30 @@ public abstract class MovableEntity extends Sprite
         this.move();
 
         this.checkCollision();
+    }
+
+    private void gravity()
+    {
+        this.addForce(0,0.5f);
+    }
+
+    private void groundFriction()
+    {
+        float groundFriction = 0.5f;
+
+        if (this.getVelocityX() != 0)
+        {
+            if (this.getVelocityX() < 0)
+                if (this.getVelocityX() + groundFriction > 0)
+                    this.setVelocityX(0);
+                else
+                    this.addForce(groundFriction, 0);
+            else
+            if (this.getVelocityX() + groundFriction < 0)
+                this.setVelocityX(0);
+            else
+                this.addForce(-groundFriction, 0);
+        }
     }
 
     private void applyForce()
@@ -189,39 +214,6 @@ public abstract class MovableEntity extends Sprite
         }
 
         return true;
-    }
-
-    private void airFriction()
-    {
-        float airFriction = 0.5f;
-
-        if (this.getVelocityX() != 0)
-        {
-            if (this.getVelocityX() < 0)
-                if (this.getVelocityX() + airFriction > 0)
-                    this.setVelocityX(0);
-                else
-                    this.addForce(airFriction, 0);
-            else
-                if (this.getVelocityX() + airFriction < 0)
-                    this.setVelocityX(0);
-                else
-                    this.addForce(-airFriction, 0);
-        }
-
-        if (this.getVelocityY() != 0)
-        {
-            if (this.getVelocityY() < 0)
-                if (this.getVelocityY() + airFriction > 0)
-                    this.setVelocityY(0);
-                else
-                    this.addForce(0, airFriction);
-            else
-            if (this.getVelocityY() + airFriction < 0)
-                this.setVelocityY(0);
-            else
-                this.addForce(0, -airFriction);
-        }
     }
 
     private void tryMove()

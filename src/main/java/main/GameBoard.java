@@ -22,6 +22,8 @@ public class GameBoard extends JPanel implements Runnable
     public ArrayList<Sprite> sprites;
     private PlatformerEntity platformerEntity;
     private SceneEntity sceneEntity;
+    private SceneEntity sceneEntity1;
+    private SceneEntity sceneEntity2;
 
     public GameBoard()
     {
@@ -31,13 +33,17 @@ public class GameBoard extends JPanel implements Runnable
         setPreferredSize(new Dimension(B_WIDTH, B_HEIGHT));
         setDoubleBuffered(true);
 
-        platformerEntity = new PlatformerEntity(this, "mario.png", 250, 0, 1, 1);
+        platformerEntity = new PlatformerEntity(this, "mario.png", 250, 0, 0.7f, 0.7f);
         platformerEntity.getAnimation().addFrameFromPath("mario_2.png");
         sceneEntity = new SceneEntity(this, "mario.png", 250, 250);
+        sceneEntity1 = new SceneEntity(this, "mario.png", 274, 250);
+        sceneEntity2 = new SceneEntity(this, "mario.png", 298, 250);
 
         sprites = new ArrayList<>();
         sprites.add(platformerEntity);
         sprites.add(sceneEntity);
+        sprites.add(sceneEntity1);
+        sprites.add(sceneEntity2);
     }
 
     @Override
@@ -58,6 +64,10 @@ public class GameBoard extends JPanel implements Runnable
             g.drawImage(platformerEntity.getImage(), (int) platformerEntity.getPositionX(), (int) platformerEntity.getPositionY(), this);
         if (sceneEntity.isVisible())
             g.drawImage(sceneEntity.getImage(), (int) sceneEntity.getPositionX(), (int) sceneEntity.getPositionY(), this);
+        if (sceneEntity1.isVisible())
+            g.drawImage(sceneEntity1.getImage(), (int) sceneEntity1.getPositionX(), (int) sceneEntity1.getPositionY(), this);
+        if (sceneEntity2.isVisible())
+            g.drawImage(sceneEntity2.getImage(), (int) sceneEntity2.getPositionX(), (int) sceneEntity2.getPositionY(), this);
 
         g.setColor(Color.white);
 
