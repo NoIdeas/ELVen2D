@@ -4,6 +4,7 @@ import enums.CollisionSide;
 import enums.MoveDirection;
 import helpers.CollisionHelper;
 import javafx.geometry.Rectangle2D;
+import main.GameBoard;
 
 /**
  * Created by NoIdeas.
@@ -11,25 +12,29 @@ import javafx.geometry.Rectangle2D;
 
 public abstract class MovableEntity extends Sprite
 {
-    private float velocityX = 0.0f;
-    private float velocityY = 0.0f;
-    private float forceX = 0.0f;
-    private float forceY = 0.0f;
-    private float accelerationX = 0.0f;
-    private float accelerationY = 0.0f;
-    private float frictionX = 0.0f;
-    private float frictionY = 0.0f;
-    private MoveDirection moveDirection = MoveDirection.STOPPED;
-    private CollisionSide collisionSide = CollisionSide.NONE;
+    private float velocityX;
+    private float velocityY;
+    private float forceX;
+    private float forceY;
+    private float accelerationX;
+    private float accelerationY;
+    private MoveDirection moveDirection;
+    private CollisionSide collisionSide;
+
+    public MovableEntity()
+    {
+        this.setVelocityX(0.0f);
+        this.setVelocityY(0.0f);
+        this.resetForce();
+        this.setAccelerationX(0.7f);
+        this.setAccelerationY(0.7f);
+        this.setMoveDirection(MoveDirection.STOPPED);
+        this.setCollisionSide(CollisionSide.NONE);
+    }
 
     @Override
     public void update(float delay)
     {
-        super.update(delay);
-
-        this.gravity();
-        this.airFriction();
-        //this.groundFriction();
         this.applyForce();
 
         this.updateCollisionSide();
@@ -54,54 +59,10 @@ public abstract class MovableEntity extends Sprite
             }
         }
 
-        this.tryMove();
         this.move();
-
         this.checkCollision();
-    }
 
-    private void gravity()
-    {
-        this.addForce(0,0.5f);
-    }
-
-    private void airFriction()
-    {
-        float airFriction = 0.2f;
-
-        if (this.getVelocityX() != 0)
-        {
-            if (this.getVelocityX() < 0)
-                if (this.getVelocityX() + airFriction > 0)
-                    this.setVelocityX(0);
-                else
-                    this.addForce(airFriction, 0);
-            else
-                if (this.getVelocityX() + airFriction < 0)
-                    this.setVelocityX(0);
-                else
-                    this.addForce(-airFriction, 0);
-        }
-    }
-
-    private void groundFriction()
-    {
-        float groundFriction = 0.3f;
-
-        if (this.getCollisionSide() == CollisionSide.DOWN)
-            if (this.getVelocityX() != 0)
-            {
-                if (this.getVelocityX() < 0)
-                    if (this.getVelocityX() + groundFriction > 0)
-                        this.setVelocityX(0);
-                    else
-                        this.addForce(groundFriction, 0);
-                else
-                    if (this.getVelocityX() + groundFriction < 0)
-                        this.setVelocityX(0);
-                    else
-                        this.addForce(-groundFriction, 0);
-            }
+        super.update(delay);
     }
 
     private void applyForce()
@@ -230,7 +191,7 @@ public abstract class MovableEntity extends Sprite
                 break;
         }
 
-        for (Sprite sprite : gameBoard.rigidBodySprites)
+        for (Sprite sprite : GameBoard.rigidBodySprites)
         {
             if (sprite.getCollisionBox().intersects(collisionLine))
             {
@@ -241,7 +202,7 @@ public abstract class MovableEntity extends Sprite
         return true;
     }
 
-    private void tryMove()
+    private void move()
     {
         float absVelocityX = Math.abs(this.getVelocityX());
         float absVelocityY = Math.abs(this.getVelocityY());
@@ -268,7 +229,7 @@ public abstract class MovableEntity extends Sprite
         {
             float tempVelocityX = this.getVelocityX();
             float tempVelocityY = this.getVelocityY();
-            for (Sprite sprite : gameBoard.rigidBodySprites)
+            for (Sprite sprite : GameBoard.rigidBodySprites)
             {
                 Rectangle2D spriteCollisionBox = sprite.getCollisionBox();
                 if (spriteCollisionBox.intersects(nextStepRect))
@@ -292,9 +253,11 @@ public abstract class MovableEntity extends Sprite
                 }
             }
         }
+
+        this.updatePosition();
     }
 
-    private void move()
+    private void updatePosition()
     {
         super.setPositionX(super.getPositionX() + this.getVelocityX());
         super.setPositionY(super.getPositionY() + this.getVelocityY());
@@ -306,7 +269,7 @@ public abstract class MovableEntity extends Sprite
         float centerX = super.getPositionX() + super.getWidth() / 2;
         float entityCenterY = super.getPositionY() + super.getHeight() / 2;
 
-        for (Sprite obstacle : gameBoard.rigidBodySprites)
+        for (Sprite obstacle : GameBoard.rigidBodySprites)
         {
             Rectangle2D obstacleCollisionBox = obstacle.getCollisionBox();
             float obstacleCenterX = obstacle.getPositionX() + obstacle.getWidth() / 2;
@@ -370,8 +333,8 @@ public abstract class MovableEntity extends Sprite
 
     public void resetForce()
     {
-        this.forceX = 0;
-        this.forceY = 0;
+        this.forceX = 0.0f;
+        this.forceY = 0.0f;
     }
 
     public float getForceX()

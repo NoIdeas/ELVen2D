@@ -1,10 +1,7 @@
 package helpers;
 
-import entities.Sprite;
-
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
 
 /**
  * Created by NoIdeas.
@@ -12,20 +9,17 @@ import java.util.ArrayList;
 
 public class KeyboardListener extends KeyAdapter
 {
-    private ArrayList<Sprite> controlledSprites;
     private boolean leftKeyPressed = false;
-    private boolean rigthKeyPressed = false;
+    private boolean rightKeyPressed = false;
     private boolean upKeyPressed = false;
-    private boolean downpKeyPressed = false;
+    private boolean downKeyPressed = false;
 
     private static KeyboardListener instance;
 
     public static KeyboardListener getInstance()
     {
         if (instance == null)
-        {
             instance = new KeyboardListener();
-        }
 
         return instance;
     }
@@ -39,13 +33,13 @@ public class KeyboardListener extends KeyAdapter
             leftKeyPressed = true;
 
         if (key == KeyEvent.VK_RIGHT)
-            rigthKeyPressed = true;
+            rightKeyPressed = true;
 
         if (key == KeyEvent.VK_UP)
             upKeyPressed = true;
 
         if (key == KeyEvent.VK_DOWN)
-            downpKeyPressed = true;
+            downKeyPressed = true;
     }
 
     @Override
@@ -57,18 +51,13 @@ public class KeyboardListener extends KeyAdapter
             leftKeyPressed = false;
 
         if (key == KeyEvent.VK_RIGHT)
-            rigthKeyPressed = false;
+            rightKeyPressed = false;
 
         if (key == KeyEvent.VK_UP)
             upKeyPressed = false;
 
         if (key == KeyEvent.VK_DOWN)
-            downpKeyPressed = false;
-    }
-
-    public void addControlledSprite(Sprite sprite)
-    {
-        this.controlledSprites.add(sprite);
+            downKeyPressed = false;
     }
 
     public boolean isLeftKeyPressed()
@@ -76,9 +65,9 @@ public class KeyboardListener extends KeyAdapter
         return leftKeyPressed;
     }
 
-    public boolean isRigthKeyPressed()
+    public boolean isRightKeyPressed()
     {
-        return rigthKeyPressed;
+        return rightKeyPressed;
     }
 
     public boolean isUpKeyPressed()
@@ -88,6 +77,6 @@ public class KeyboardListener extends KeyAdapter
 
     public boolean isDownKeyPressed()
     {
-        return downpKeyPressed;
+        return downKeyPressed;
     }
 }

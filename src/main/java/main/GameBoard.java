@@ -15,12 +15,12 @@ public class GameBoard extends JPanel implements Runnable
 {
     public final int B_WIDTH = 500;
     public final int B_HEIGHT = 500;
-    private final int DELAY = 16;
-    private Thread animator;
+    public final int DELAY = 16;
+    public Thread animator;
 
     // Sprites
-    public ArrayList<Sprite> rigidBodySprites;
-    private PlatformerEntity platformerEntity;
+    public static ArrayList<Sprite> rigidBodySprites;
+    private PlatformerEntity myHero;
     private SceneEntity sceneEntity;
     private SceneEntity sceneEntity1;
     private SceneEntity sceneEntity2;
@@ -34,15 +34,14 @@ public class GameBoard extends JPanel implements Runnable
         setPreferredSize(new Dimension(B_WIDTH, B_HEIGHT));
         setDoubleBuffered(true);
 
-        platformerEntity = new PlatformerEntity(this, "mario.png", 250, 0, 0.7f);
-        platformerEntity.getAnimation().addFrameFromPath("mario_2.png");
-        keyboardListener.addControlledSprite(platformerEntity);
-        sceneEntity = new SceneEntity(this, "mario.png", 250, 250);
-        sceneEntity1 = new SceneEntity(this, "mario.png", 274, 250);
-        sceneEntity2 = new SceneEntity(this, "mario.png", 298, 250);
+        myHero = new MyHero("mario.png", 250, 0, 0.7f);
+        myHero.getAnimation().addFrameFromPath("mario_2.png");
+        sceneEntity = new SceneEntity("mario.png", 250, 250);
+        sceneEntity1 = new SceneEntity("mario.png", 274, 250);
+        sceneEntity2 = new SceneEntity("mario.png", 298, 250);
 
         rigidBodySprites = new ArrayList<>();
-        rigidBodySprites.add(platformerEntity);
+        rigidBodySprites.add(myHero);
         rigidBodySprites.add(sceneEntity);
         rigidBodySprites.add(sceneEntity1);
         rigidBodySprites.add(sceneEntity2);
@@ -62,8 +61,8 @@ public class GameBoard extends JPanel implements Runnable
     {
         super.paintComponent(g);
 
-        if (platformerEntity.isVisible())
-            g.drawImage(platformerEntity.getImage(), (int) platformerEntity.getPositionX(), (int) platformerEntity.getPositionY(), this);
+        if (myHero.isVisible())
+            g.drawImage(myHero.getImage(), (int) myHero.getPositionX(), (int) myHero.getPositionY(), this);
         if (sceneEntity.isVisible())
             g.drawImage(sceneEntity.getImage(), (int) sceneEntity.getPositionX(), (int) sceneEntity.getPositionY(), this);
         if (sceneEntity1.isVisible())
@@ -74,16 +73,16 @@ public class GameBoard extends JPanel implements Runnable
         g.setColor(Color.white);
 
         // dev
-        g.drawString("Colliding: " + platformerEntity.getCollisionSide(), 10, 20);
-        g.drawString("VelocityX: " + platformerEntity.getVelocityX(), 10, 35);
-        g.drawString("VelocityY: " + platformerEntity.getVelocityY(), 10, 50);
-        g.drawString("ForceX: " + platformerEntity.getForceX(), 10, 65);
-        g.drawString("ForceY: " + platformerEntity.getForceY(), 10, 80);
-        g.drawString("moveDirection: " + platformerEntity.getMoveDirection(), 10, 95);
+        g.drawString("Colliding: " + myHero.getCollisionSide(), 10, 20);
+        g.drawString("VelocityX: " + myHero.getVelocityX(), 10, 35);
+        g.drawString("VelocityY: " + myHero.getVelocityY(), 10, 50);
+        g.drawString("ForceX: " + myHero.getForceX(), 10, 65);
+        g.drawString("ForceY: " + myHero.getForceY(), 10, 80);
+        g.drawString("moveDirection: " + myHero.getMoveDirection(), 10, 95);
 
         KeyboardListener kListener = KeyboardListener.getInstance();
         g.drawString("isLeftKeyPressed: " + kListener.isLeftKeyPressed(), 200, 20);
-        g.drawString("isRigthKeyPressed: " + kListener.isRigthKeyPressed(), 200, 35);
+        g.drawString("isRightKeyPressed: " + kListener.isRightKeyPressed(), 200, 35);
         g.drawString("isUpKeyPressed: " + kListener.isUpKeyPressed(), 200, 50);
         g.drawString("isDownpKeyPressed: " + kListener.isDownKeyPressed(), 200, 65);
 
@@ -92,16 +91,16 @@ public class GameBoard extends JPanel implements Runnable
 
     private void cycle(float delay)
     {
-        platformerEntity.update(delay);
+        myHero.update(delay);
 
-        if (platformerEntity.getPositionY() > B_HEIGHT)
-            platformerEntity.setPositionY(0);
-        if (platformerEntity.getPositionX() > B_WIDTH)
-            platformerEntity.setPositionX(0);
-        if (platformerEntity.getPositionY() < 0)
-            platformerEntity.setPositionY(B_HEIGHT);
-        if (platformerEntity.getPositionX() < 0)
-            platformerEntity.setPositionX(B_WIDTH);
+        if (myHero.getPositionY() > B_HEIGHT)
+            myHero.setPositionY(0);
+        if (myHero.getPositionX() > B_WIDTH)
+            myHero.setPositionX(0);
+        if (myHero.getPositionY() < 0)
+            myHero.setPositionY(B_HEIGHT);
+        if (myHero.getPositionX() < 0)
+            myHero.setPositionX(B_WIDTH);
     }
 
     @Override
