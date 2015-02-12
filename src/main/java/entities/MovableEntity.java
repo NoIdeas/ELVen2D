@@ -2,6 +2,7 @@ package entities;
 
 import enums.CollisionSide;
 import enums.MoveDirection;
+import helpers.CollisionHelper;
 import javafx.geometry.Rectangle2D;
 
 /**
@@ -313,7 +314,7 @@ public abstract class MovableEntity extends Sprite
 
             if (obstacleCollisionBox.intersects(collisionBox) && obstacle != this)
             {
-                Rectangle2D collisionIntersection = intersect(collisionBox, obstacleCollisionBox);
+                Rectangle2D collisionIntersection = CollisionHelper.intersect(collisionBox, obstacleCollisionBox);
                 float diffX = (obstacleCenterX - centerX);
                 float diffY = (obstacleCenterY - entityCenterY);
 
