@@ -6,6 +6,6 @@ package world;
 
 public class Gravity
 {
-    public static float gravityX = 0f;
-    public static float gravityY = 0.2f;
+    public static float GRAVITY_X = 0f;
+    public static float GRAVITY_Y = 0.5f;
 }
