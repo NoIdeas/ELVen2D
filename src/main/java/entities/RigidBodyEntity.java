@@ -10,7 +10,7 @@ import main.GameBoard;
  * Created by NoIdeas.
  */
 
-public abstract class MovableEntity extends Sprite
+public abstract class RigidBodyEntity extends Sprite
 {
     private float velocityX;
     private float velocityY;
@@ -21,7 +21,7 @@ public abstract class MovableEntity extends Sprite
     private MoveDirection moveDirection;
     private CollisionSide collisionSide;
 
-    public MovableEntity()
+    public RigidBodyEntity()
     {
         this.setVelocityX(0.0f);
         this.setVelocityY(0.0f);

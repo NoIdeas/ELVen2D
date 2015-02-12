@@ -7,7 +7,7 @@ import behaviors.PlatformerPhysics;
  * Created by NoIdeas.
  */
 
-public abstract class PlatformerEntity extends MovableEntity
+public abstract class PlatformerEntity extends RigidBodyEntity
 {
     private PhysicsBehaviour physicsBehaviour;
 

@@ -1,6 +1,6 @@
 package behaviors;
 
-import entities.MovableEntity;
+import entities.RigidBodyEntity;
 import world.Gravity;
 
 /**
@@ -9,14 +9,14 @@ import world.Gravity;
 
 public class PlatformerPhysics implements PhysicsBehaviour
 {
-    private MovableEntity movableEntity;
+    private RigidBodyEntity rigidBodyEntity;
 
     private float frictionX;
     private float frictionY;
 
-    public PlatformerPhysics(MovableEntity movableEntity)
+    public PlatformerPhysics(RigidBodyEntity rigidBodyEntity)
     {
-        this.movableEntity = movableEntity;
+        this.rigidBodyEntity = rigidBodyEntity;
 
         this.setFrictionX(0.4f);
         this.setFrictionY(0.2f);
@@ -24,37 +24,37 @@ public class PlatformerPhysics implements PhysicsBehaviour
 
     public void gravity()
     {
-        movableEntity.addForce(Gravity.GRAVITY_X, Gravity.GRAVITY_Y);
+        rigidBodyEntity.addForce(Gravity.GRAVITY_X, Gravity.GRAVITY_Y);
     }
 
     public void friction()
     {
-        if (movableEntity.getVelocityX() != 0)
+        if (rigidBodyEntity.getVelocityX() != 0)
         {
-            if (movableEntity.getVelocityX() < 0)
-                if (movableEntity.getVelocityX() + this.getFrictionX() > 0)
-                    movableEntity.setVelocityX(0);
+            if (rigidBodyEntity.getVelocityX() < 0)
+                if (rigidBodyEntity.getVelocityX() + this.getFrictionX() > 0)
+                    rigidBodyEntity.setVelocityX(0);
                 else
-                    movableEntity.addForce(this.getFrictionX(), 0);
+                    rigidBodyEntity.addForce(this.getFrictionX(), 0);
             else
-            if (movableEntity.getVelocityX() + this.getFrictionX() < 0)
-                movableEntity.setVelocityX(0);
+            if (rigidBodyEntity.getVelocityX() + this.getFrictionX() < 0)
+                rigidBodyEntity.setVelocityX(0);
             else
-                movableEntity.addForce(-this.getFrictionX(), 0);
+                rigidBodyEntity.addForce(-this.getFrictionX(), 0);
         }
 
-        if (movableEntity.getVelocityY() != 0)
+        if (rigidBodyEntity.getVelocityY() != 0)
         {
-            if (movableEntity.getVelocityY() < 0)
-                if (movableEntity.getVelocityY() + this.getFrictionY() > 0)
-                    movableEntity.setVelocityY(0);
+            if (rigidBodyEntity.getVelocityY() < 0)
+                if (rigidBodyEntity.getVelocityY() + this.getFrictionY() > 0)
+                    rigidBodyEntity.setVelocityY(0);
                 else
-                    movableEntity.addForce(0, this.getFrictionY());
+                    rigidBodyEntity.addForce(0, this.getFrictionY());
             else
-            if (movableEntity.getVelocityY() + this.getFrictionY() < 0)
-                movableEntity.setVelocityY(0);
+            if (rigidBodyEntity.getVelocityY() + this.getFrictionY() < 0)
+                rigidBodyEntity.setVelocityY(0);
             else
-                movableEntity.addForce(0, -this.getFrictionY());
+                rigidBodyEntity.addForce(0, -this.getFrictionY());
         }
     }
 
