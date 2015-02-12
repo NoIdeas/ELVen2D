@@ -6,7 +6,7 @@ import javafx.geometry.Rectangle2D;
  * Created by NoIdeas.
  */
 
-public class CollisionHelper
+public abstract class CollisionHelper
 {
     /**
      * Returns a rectangle that represents the intersection between two other rectangles.
