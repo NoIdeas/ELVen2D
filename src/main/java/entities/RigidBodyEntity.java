@@ -191,7 +191,7 @@ public abstract class RigidBodyEntity extends Sprite
                 break;
         }
 
-        for (Sprite sprite : GameBoard.rigidBodySprites)
+        for (Sprite sprite : GameBoard.canCollideList)
         {
             if (sprite.getCollisionBox().intersects(collisionLine))
             {
@@ -229,7 +229,7 @@ public abstract class RigidBodyEntity extends Sprite
         {
             float tempVelocityX = this.getVelocityX();
             float tempVelocityY = this.getVelocityY();
-            for (Sprite sprite : GameBoard.rigidBodySprites)
+            for (Sprite sprite : GameBoard.canCollideList)
             {
                 Rectangle2D spriteCollisionBox = sprite.getCollisionBox();
                 if (spriteCollisionBox.intersects(nextStepRect))
@@ -269,7 +269,7 @@ public abstract class RigidBodyEntity extends Sprite
         float centerX = super.getPositionX() + super.getWidth() / 2;
         float entityCenterY = super.getPositionY() + super.getHeight() / 2;
 
-        for (Sprite obstacle : GameBoard.rigidBodySprites)
+        for (Sprite obstacle : GameBoard.canCollideList)
         {
             Rectangle2D obstacleCollisionBox = obstacle.getCollisionBox();
             float obstacleCenterX = obstacle.getPositionX() + obstacle.getWidth() / 2;

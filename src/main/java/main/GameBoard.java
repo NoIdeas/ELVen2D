@@ -14,13 +14,14 @@ import java.util.ArrayList;
 
 public class GameBoard extends JPanel implements Runnable
 {
+    // Board Configs
     public final int B_WIDTH = 500;
     public final int B_HEIGHT = 500;
     public final int DELAY = 16;
     public Thread animator;
 
     // Sprites
-    public static ArrayList<Sprite> rigidBodySprites;
+    public static ArrayList<Sprite> canCollideList;
     private PlatformerEntity myHero;
     private SceneEntity sceneEntity;
     private SceneEntity sceneEntity1;
@@ -28,12 +29,13 @@ public class GameBoard extends JPanel implements Runnable
 
     public GameBoard()
     {
-        KeyboardListener keyboardListener = KeyboardListener.getInstance();
-        addKeyListener(keyboardListener);
         setFocusable(true);
         setBackground(Color.BLACK);
         setPreferredSize(new Dimension(B_WIDTH, B_HEIGHT));
         setDoubleBuffered(true);
+
+        KeyboardListener keyboardListener = KeyboardListener.getInstance();
+        addKeyListener(keyboardListener);
 
         myHero = new MyHero("mario.png", 250, 0, 0.7f);
         myHero.getAnimation().addFrameFromPath("mario_2.png");
@@ -42,11 +44,11 @@ public class GameBoard extends JPanel implements Runnable
         sceneEntity1 = new SceneEntity("mario.png", 274, 250);
         sceneEntity2 = new SceneEntity("mario.png", 298, 250);
 
-        rigidBodySprites = new ArrayList<>();
-        rigidBodySprites.add(myHero);
-        rigidBodySprites.add(sceneEntity);
-        rigidBodySprites.add(sceneEntity1);
-        rigidBodySprites.add(sceneEntity2);
+        canCollideList = new ArrayList<>();
+        canCollideList.add(myHero);
+        canCollideList.add(sceneEntity);
+        canCollideList.add(sceneEntity1);
+        canCollideList.add(sceneEntity2);
     }
 
     @Override
