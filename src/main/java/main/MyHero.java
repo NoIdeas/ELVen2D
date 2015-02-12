@@ -1,14 +1,16 @@
 package main;
 
 import entities.PlatformerEntity;
-import enums.CollisionSide;
+import helpers.KeyboardControlled;
 import helpers.KeyboardListener;
+
+import java.awt.event.KeyEvent;
 
 /**
  * Created by NoIdeas.
  */
 
-public class MyHero extends PlatformerEntity
+public class MyHero extends PlatformerEntity implements KeyboardControlled
 {
     KeyboardListener keyboardListener = KeyboardListener.getInstance();
 
@@ -25,15 +27,11 @@ public class MyHero extends PlatformerEntity
     public void update(float delay)
     {
         super.resetForce();
-        if (super.getCollisionSide() == CollisionSide.DOWN)
-            resetJumps();
 
         if (this.keyboardListener.isLeftKeyPressed())
             super.addForce(-super.getAccelerationX(), 0.0f);
         if (this.keyboardListener.isRightKeyPressed())
             super.addForce(super.getAccelerationX(), 0.0f);
-        if (this.keyboardListener.isUpKeyPressed())
-            super.jump();
         if (this.keyboardListener.isDownKeyPressed())
             super.addForce(0.0f, super.getAccelerationY());
 
@@ -41,6 +39,18 @@ public class MyHero extends PlatformerEntity
     }
 
 
+    @Override
+    public void keyPressed(KeyEvent e)
+    {
+        if (e.getKeyCode() == KeyEvent.VK_UP)
+        {
+            super.jump();
+        }
+    }
 
+    @Override
+    public void keyReleased(KeyEvent e)
+    {
 
+    }
 }

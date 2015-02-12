@@ -2,6 +2,7 @@ package helpers;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 /**
  * Created by NoIdeas.
@@ -9,12 +10,18 @@ import java.awt.event.KeyEvent;
 
 public class KeyboardListener extends KeyAdapter
 {
+    private static KeyboardListener instance;
+
+    private ArrayList<KeyboardControlled> controlledEntities;
     private boolean leftKeyPressed = false;
     private boolean rightKeyPressed = false;
     private boolean upKeyPressed = false;
     private boolean downKeyPressed = false;
 
-    private static KeyboardListener instance;
+    private KeyboardListener()
+    {
+        controlledEntities = new ArrayList<>();
+    }
 
     public static KeyboardListener getInstance()
     {
@@ -40,6 +47,8 @@ public class KeyboardListener extends KeyAdapter
 
         if (key == KeyEvent.VK_DOWN)
             downKeyPressed = true;
+
+        controlledEntities.forEach(cs -> cs.keyPressed(e));
     }
 
     @Override
@@ -58,6 +67,13 @@ public class KeyboardListener extends KeyAdapter
 
         if (key == KeyEvent.VK_DOWN)
             downKeyPressed = false;
+
+        controlledEntities.forEach(cs -> cs.keyReleased(e));
+    }
+
+    public void addKeyboardControlled(KeyboardControlled kc)
+    {
+        this.controlledEntities.add(kc);
     }
 
     public boolean isLeftKeyPressed()

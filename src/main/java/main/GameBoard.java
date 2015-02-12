@@ -1,6 +1,7 @@
 package main;
 
 import entities.*;
+import helpers.KeyboardControlled;
 import helpers.KeyboardListener;
 
 import javax.swing.*;
@@ -36,6 +37,7 @@ public class GameBoard extends JPanel implements Runnable
 
         myHero = new MyHero("mario.png", 250, 0, 0.7f);
         myHero.getAnimation().addFrameFromPath("mario_2.png");
+        keyboardListener.addKeyboardControlled((KeyboardControlled) myHero);
         sceneEntity = new SceneEntity("mario.png", 250, 250);
         sceneEntity1 = new SceneEntity("mario.png", 274, 250);
         sceneEntity2 = new SceneEntity("mario.png", 298, 250);
