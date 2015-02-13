@@ -1,5 +1,6 @@
 package entities;
 
+import behaviors.PhysicsBehaviour;
 import enums.CollisionSide;
 import enums.MoveDirection;
 import helpers.CollisionHelper;
@@ -12,6 +13,8 @@ import main.GameBoard;
 
 public abstract class RigidBodyEntity extends Sprite
 {
+    protected PhysicsBehaviour physicsBehaviour;
+
     private float velocityX;
     private float velocityY;
     private float forceX;

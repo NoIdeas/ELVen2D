@@ -24,37 +24,37 @@ public class PlatformerPhysics implements PhysicsBehaviour
 
     public void gravity()
     {
-        rigidBodyEntity.addForce(Gravity.GRAVITY_X, Gravity.GRAVITY_Y);
+        this.rigidBodyEntity.addForce(Gravity.GRAVITY_X, Gravity.GRAVITY_Y);
     }
 
     public void friction()
     {
-        if (rigidBodyEntity.getVelocityX() != 0)
+        if (this.rigidBodyEntity.getVelocityX() != 0)
         {
-            if (rigidBodyEntity.getVelocityX() < 0)
-                if (rigidBodyEntity.getVelocityX() + this.getFrictionX() > 0)
-                    rigidBodyEntity.setVelocityX(0);
+            if (this.rigidBodyEntity.getVelocityX() < 0)
+                if (this.rigidBodyEntity.getVelocityX() + this.getFrictionX() > 0)
+                    this.rigidBodyEntity.setVelocityX(0);
                 else
-                    rigidBodyEntity.addForce(this.getFrictionX(), 0);
+                    this.rigidBodyEntity.addForce(this.getFrictionX(), 0);
             else
-            if (rigidBodyEntity.getVelocityX() + this.getFrictionX() < 0)
-                rigidBodyEntity.setVelocityX(0);
+            if (this.rigidBodyEntity.getVelocityX() + this.getFrictionX() < 0)
+                this.rigidBodyEntity.setVelocityX(0);
             else
-                rigidBodyEntity.addForce(-this.getFrictionX(), 0);
+                this.rigidBodyEntity.addForce(-this.getFrictionX(), 0);
         }
 
-        if (rigidBodyEntity.getVelocityY() != 0)
+        if (this.rigidBodyEntity.getVelocityY() != 0)
         {
-            if (rigidBodyEntity.getVelocityY() < 0)
-                if (rigidBodyEntity.getVelocityY() + this.getFrictionY() > 0)
-                    rigidBodyEntity.setVelocityY(0);
+            if (this.rigidBodyEntity.getVelocityY() < 0)
+                if (this.rigidBodyEntity.getVelocityY() + this.getFrictionY() > 0)
+                    this.rigidBodyEntity.setVelocityY(0);
                 else
-                    rigidBodyEntity.addForce(0, this.getFrictionY());
+                    this.rigidBodyEntity.addForce(0, this.getFrictionY());
             else
-            if (rigidBodyEntity.getVelocityY() + this.getFrictionY() < 0)
-                rigidBodyEntity.setVelocityY(0);
+            if (this.rigidBodyEntity.getVelocityY() + this.getFrictionY() < 0)
+                this.rigidBodyEntity.setVelocityY(0);
             else
-                rigidBodyEntity.addForce(0, -this.getFrictionY());
+                this.rigidBodyEntity.addForce(0, -this.getFrictionY());
         }
     }
 

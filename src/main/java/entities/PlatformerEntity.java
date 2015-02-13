@@ -1,6 +1,5 @@
 package entities;
 
-import behaviors.PhysicsBehaviour;
 import behaviors.PlatformerPhysics;
 import enums.CollisionSide;
 
@@ -10,15 +9,13 @@ import enums.CollisionSide;
 
 public abstract class PlatformerEntity extends RigidBodyEntity
 {
-    private PhysicsBehaviour physicsBehaviour;
-
     private boolean isJumping;
     private boolean isDying;
     private int timesJumped;
 
     public PlatformerEntity()
     {
-        physicsBehaviour = new PlatformerPhysics(this);
+        super.physicsBehaviour = new PlatformerPhysics(this);
 
         this.isDying = false;
         this.isJumping = false;
