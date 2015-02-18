@@ -41,29 +41,11 @@ public abstract class RigidBodyEntity extends Sprite
         this.applyForce();
 
         this.updateCollisionSide();
-        this.updateMoveDirection();
-
-        if (this.getCollisionSide() != CollisionSide.NONE)
-        {
-            switch (this.getCollisionSide())
-            {
-                case LEFT:
-                    this.setVelocityX(0);
-                    break;
-                case RIGHT:
-                    this.setVelocityX(0);
-                    break;
-                case UP:
-                    this.setVelocityY(0);
-                    break;
-                case DOWN:
-                    this.setVelocityY(0);
-                    break;
-            }
-        }
+        this.collide();
 
         this.move();
-        this.checkCollision();
+        this.updateMoveDirection();
+        this.resolveCollision();
 
         super.update(delay);
     }
@@ -170,6 +152,28 @@ public abstract class RigidBodyEntity extends Sprite
             this.setMoveDirection(MoveDirection.STOPPED);
     }
 
+    private void collide()
+    {
+        if (this.getCollisionSide() != CollisionSide.NONE)
+        {
+            switch (this.getCollisionSide())
+            {
+                case LEFT:
+                    this.setVelocityX(0);
+                    break;
+                case RIGHT:
+                    this.setVelocityX(0);
+                    break;
+                case UP:
+                    this.setVelocityY(0);
+                    break;
+                case DOWN:
+                    this.setVelocityY(0);
+                    break;
+            }
+        }
+    }
+
     private boolean isSideFree(CollisionSide side)
     {
         Rectangle2D collisionLine = null;
@@ -266,7 +270,7 @@ public abstract class RigidBodyEntity extends Sprite
         super.setPositionY(super.getPositionY() + this.getVelocityY());
     }
 
-    private void checkCollision()
+    private void resolveCollision()
     {
         Rectangle2D collisionBox = this.getCollisionBox();
         float centerX = super.getPositionX() + super.getWidth() / 2;
@@ -301,6 +305,8 @@ public abstract class RigidBodyEntity extends Sprite
             }
         }
     }
+
+    // Access methods
 
     public void setVelocity(float velocityX, float velocityY)
     {

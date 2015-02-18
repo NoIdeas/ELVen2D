@@ -1,6 +1,7 @@
 package main;
 
 import entities.PlatformerEntity;
+import enums.CollisionSide;
 import helpers.KeyboardControlled;
 import helpers.KeyboardListener;
 
@@ -26,7 +27,11 @@ public class MyHero extends PlatformerEntity implements KeyboardControlled
     @Override
     public void update(float delay)
     {
+        if (super.isDying())
+            super.hide();
+
         super.resetForce();
+        super.getPhysics().resetFriction();
 
         if (this.keyboardListener.isLeftKeyPressed())
             super.addForce(-super.getAccelerationX(), 0.0f);
@@ -35,7 +40,28 @@ public class MyHero extends PlatformerEntity implements KeyboardControlled
         if (this.keyboardListener.isDownKeyPressed())
             super.addForce(0.0f, super.getAccelerationY());
 
+        if (super.getCollisionSide() == CollisionSide.DOWN)
+            resetJumps();
+        if (super.isJumping())
+            this.jump();
+
+        if (this.getCollisionSide() == CollisionSide.DOWN)
+            super.getPhysics().addFriction(0.3f, 0.0f);
+
+
         super.update(delay);
+    }
+
+    public void jump()
+    {
+        if (super.getTimesJumped() < 1)
+        {
+            super.setVelocityY(0);
+            super.addForce(0, -10);
+            super.addTimesJumped();
+            System.out.println("JUMPED BITCH");
+        }
+        super.setJumping(false);
     }
 
 

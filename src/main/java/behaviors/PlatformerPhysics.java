@@ -13,13 +13,17 @@ public class PlatformerPhysics implements PhysicsBehaviour
 
     private float frictionX;
     private float frictionY;
+    private float externalFrictionX;
+    private float externalFrictionY;
 
     public PlatformerPhysics(RigidBodyEntity rigidBodyEntity)
     {
         this.rigidBodyEntity = rigidBodyEntity;
 
-        this.setFrictionX(0.4f);
-        this.setFrictionY(0.2f);
+        this.setFrictionX(0.2f);
+        this.setFrictionY(0.1f);
+        this.externalFrictionX = 0;
+        this.externalFrictionY = 0;
     }
 
     public void gravity()
@@ -29,32 +33,34 @@ public class PlatformerPhysics implements PhysicsBehaviour
 
     public void friction()
     {
+        float frictionX = this.getFrictionX() + this.externalFrictionX;
         if (this.rigidBodyEntity.getVelocityX() != 0)
         {
             if (this.rigidBodyEntity.getVelocityX() < 0)
-                if (this.rigidBodyEntity.getVelocityX() + this.getFrictionX() > 0)
+                if (this.rigidBodyEntity.getVelocityX() + frictionX > 0)
                     this.rigidBodyEntity.setVelocityX(0);
                 else
-                    this.rigidBodyEntity.addForce(this.getFrictionX(), 0);
+                    this.rigidBodyEntity.addForce(frictionX, 0);
             else
-            if (this.rigidBodyEntity.getVelocityX() + this.getFrictionX() < 0)
-                this.rigidBodyEntity.setVelocityX(0);
-            else
-                this.rigidBodyEntity.addForce(-this.getFrictionX(), 0);
+                if (this.rigidBodyEntity.getVelocityX() + frictionX < 0)
+                    this.rigidBodyEntity.setVelocityX(0);
+                else
+                    this.rigidBodyEntity.addForce(-frictionX, 0);
         }
 
+        float frictionY = this.getFrictionY() + this.externalFrictionY;
         if (this.rigidBodyEntity.getVelocityY() != 0)
         {
             if (this.rigidBodyEntity.getVelocityY() < 0)
-                if (this.rigidBodyEntity.getVelocityY() + this.getFrictionY() > 0)
+                if (this.rigidBodyEntity.getVelocityY() + frictionY > 0)
                     this.rigidBodyEntity.setVelocityY(0);
                 else
-                    this.rigidBodyEntity.addForce(0, this.getFrictionY());
+                    this.rigidBodyEntity.addForce(0, frictionY);
             else
-            if (this.rigidBodyEntity.getVelocityY() + this.getFrictionY() < 0)
-                this.rigidBodyEntity.setVelocityY(0);
-            else
-                this.rigidBodyEntity.addForce(0, -this.getFrictionY());
+                if (this.rigidBodyEntity.getVelocityY() + frictionY < 0)
+                    this.rigidBodyEntity.setVelocityY(0);
+                else
+                    this.rigidBodyEntity.addForce(0, -frictionY);
         }
     }
 
@@ -76,5 +82,17 @@ public class PlatformerPhysics implements PhysicsBehaviour
     public void setFrictionY(float frictionY)
     {
         this.frictionY = frictionY;
+    }
+
+    public void addFriction(float frictionX, float frictionY)
+    {
+        this.externalFrictionX += frictionX;
+        this.externalFrictionY += frictionY;
+    }
+
+    public void resetFriction()
+    {
+        externalFrictionX = 0;
+        externalFrictionY = 0;
     }
 }
